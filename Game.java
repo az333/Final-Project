@@ -13,7 +13,9 @@ public class Game extends JComponent{
 	    }
 	}
     }
+    //going to have to write a constructor that takes in an int[][] and sets puzzleNums = to that
 
+    
     public void setNum(int r, int c, int x){
 	puzzleNums[r][c] = x;
     }

@@ -15,16 +15,19 @@ public class Grid extends JComponent {
     private static Font textFont = new Font ("Sansserif", Font.BOLD, 24);
 
     public Grid(Game game){
-	//setPreferredSize(new Dimension(boardPixels, boardPixels));
+	setPreferredSize(new Dimension(boardPixels + 5, boardPixels + 5));
 	setBackground(Color.WHITE);
 	this.game = game;
     }
 
-    public void background(Graphics g){
+    @Override
+    public void paintComponent(Graphics g){
         g.setColor(getBackground());
+	g.fillRect(0, 0, getWidth(), getHeight());
 	g.setColor(Color.BLACK);
 
 	setGridLines(g);
+	drawCellValues(g);
     }
 
     public void setGridLines(Graphics g){
@@ -39,7 +42,18 @@ public class Grid extends JComponent {
     }
 
 
-    
+    // Method to simplify paintComponent.
+    private void drawCellValues(Graphics g) {
+        g.setFont(textFont);
+        for (int i = 0; i < puzzleSize; i++) {
+            int yDisplacement = (i+1) * boxPixels - textOffset;
+            for (int j = 0; j < puzzleSize; j++) {
+                if (game.getNum(i, j) != 0) {
+                    int xDisplacement = j * boxPixels + textOffset;
+                    g.drawString("" + game.getNum(i, j), xDisplacement, yDisplacement);
+                }
+            }
+        }
 
+    }
 }
-	
