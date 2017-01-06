@@ -12,9 +12,14 @@ public class GameGrid extends JFrame implements ActionListener{ //this is the pa
 	this.game = new Game();
 	this.grid = new Grid(game);
 	content = this.getContentPane();
+	content.setLayout(new BorderLayout());
 	content.add(game, BorderLayout.CENTER);
+	setContentPane(content);
 	setTitle("soDoCa");
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	//setResizable(false);
+	pack();
+	setLocationRelativeTo(null);
   
     }    
     
@@ -22,11 +27,15 @@ public class GameGrid extends JFrame implements ActionListener{ //this is the pa
 	this.game = game;
 	this.grid = new Grid(game);
 	content = this.getContentPane();
+	content.setLayout(new BorderLayout());
 	content.add(game, BorderLayout.CENTER);
+	setContentPane(content);
 	setTitle("soDoCa");
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 	//setResizable(false);
-  
-
+	pack();
+	setLocationRelativeTo(null);
+	  
     }
     
     
