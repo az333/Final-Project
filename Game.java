@@ -3,13 +3,13 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class Game {
+public class Game extends JComponent{
 
     private int[][] puzzleNums = new int[9][9];
     public Game(){
-	for (int i = 0; i < 81 ; i++){
-	    for (int j = 0; j < 81 ; j++){
-		puzzleNums[i][j] = (i * 3 + i / n + j % 10);
+	for (int i = 0; i < 9 ; i++){
+	    for (int j = 0; j < 9 ; j++){
+		puzzleNums[i][j] = (i * 3 + i / 3 + j % 10);
 	    }
 	}
     }

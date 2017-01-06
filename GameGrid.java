@@ -2,25 +2,48 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class GameGrid extends JFrame extends ActionListener{ //this is the part with the action listener
+public class GameGrid extends JFrame implements ActionListener{ //this is the part with the action listener
+    private Grid grid;
+    private Game game;
 
+    private Container content;
 
-
+    public GameGrid(){
+	this.game = new Game();
+	this.grid = new Grid(game);
+	content = this.getContentPane();
+	content.add(game, BorderLayout.CENTER);
+	setTitle("soDoCa");
+	//setResizable(false);
+  
+    }    
     
-    private int[][] puzzleNums = new int[9][9];
-    public int[][] createPuzzle(int n){
-    for (int i = 0; i < n*n ; i++){
-	for (int j = 0; j < n*n ; j++){
-	puzzleNums[i][j] = (i * n + i / n + j %10);
-	}
+    public GameGrid(Game game){
+	this.game = game;
+	this.grid = new Grid(game);
+	content = this.getContentPane();
+	content.add(game, BorderLayout.CENTER);
+	setTitle("soDoCa");
+	//setResizable(false);
+  
+
     }
-    puzzleNums.createPuzzle(n);
-
-
-
     
     
+
+    
+@Override
+    public void actionPerformed(ActionEvent e){
+
+}
+
+
+    public static void main (String[]args){
+	GameGrid b = new GameGrid();
+	b.setVisible(true);
     }
+    
+}
     
 	    
     
@@ -34,6 +57,3 @@ public class GameGrid extends JFrame extends ActionListener{ //this is the part 
 
 
 
-    
-
-}
