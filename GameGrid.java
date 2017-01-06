@@ -31,7 +31,7 @@ public class GameGrid extends JFrame implements ActionListener{ //this is the pa
 	content.add(game, BorderLayout.CENTER);
 	setContentPane(content);
 	setTitle("soDoCa");
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	//setResizable(false);
 	pack();
 	setLocationRelativeTo(null);
