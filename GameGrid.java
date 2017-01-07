@@ -4,7 +4,7 @@ import java.awt.event.*;
 
 public class GameGrid extends JFrame{ //this is the part with the action listener
     private Grid grid;
-    private Game initialBoard;
+    private Sudoku initialBoard;
 
     private Container content;
 
@@ -13,7 +13,7 @@ public class GameGrid extends JFrame{ //this is the part with the action listene
     private JButton reveal = new JButton("Reveal the Solution");
 
     public GameGrid(){
-	this.initialBoard = new Game();
+	this.initialBoard = new Sudoku();
 	this.grid = new Grid(initialBoard);
 
 
@@ -38,7 +38,7 @@ public class GameGrid extends JFrame{ //this is the part with the action listene
   
     }    
     
-    public GameGrid(Game initialBoard){
+    public GameGrid(Sudoku initialBoard){
 	this.initialBoard = initialBoard;
 	this.grid = new Grid(initialBoard);
 

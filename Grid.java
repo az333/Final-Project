@@ -14,10 +14,10 @@ public class Grid extends JComponent {
 
 
 
-    private Game initialBoard;    
+    private Sudoku initialBoard;    
     
 
-    public Grid(Game initialBoard) {
+    public Grid(Sudoku initialBoard) {
         setPreferredSize(new Dimension(boardPixels + 2, boardPixels + 2));
         setBackground(Color.WHITE);
         this.initialBoard = initialBoard;
@@ -28,8 +28,7 @@ public class Grid extends JComponent {
         //... Draw background.
         g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight());
-        g.setColor(Color.BLACK);
-        
+        g.setColor(Color.BLACK);        
         drawGridLines(g);
         drawCellValues(g);
     }
@@ -53,12 +52,23 @@ public class Grid extends JComponent {
             int yDisplacement = (i+1) * boxPixels - textOffset;
             for (int j = 0; j < puzzleSize; j++) {
                 if (initialBoard.getNum(i, j) != 0) {
+		    String value = boxValue(initialBoard.getNum(i,j));
                     int xDisplacement = j * boxPixels + textOffset;
-                    g.drawString("" + initialBoard.getNum(i, j), xDisplacement, yDisplacement);
+                    g.drawString(value, xDisplacement, yDisplacement);
                 }
             }
         }
     }
+
+
+    private String boxValue(int num){
+	String ans = "";
+	if (num < 10 && num > 0){
+	    ans = num + "";
+	}
+	return ans;
+    }
+	
     
 }
 
