@@ -2,18 +2,33 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class GameGrid extends JFrame implements ActionListener{ //this is the part with the action listener
+public class GameGrid extends JFrame{ //this is the part with the action listener
     private Grid grid;
-    private Game game;
+    private Game initialBoard;
 
     private Container content;
 
+
+    private JButton check = new JButton("Check My Solution");
+    private JButton reveal = new JButton("Reveal the Solution");
+
     public GameGrid(){
-	this.game = new Game();
-	this.grid = new Grid(game);
-	content = this.getContentPane();
+	this.initialBoard = new Game();
+	this.grid = new Grid(initialBoard);
+
+
+	JPanel menuBar = new JPanel();
+	menuBar.setLayout(new FlowLayout());
+	menuBar.add(check);
+	menuBar.add(reveal);
+	
+	//content = this.getContentPane();
+	JPanel content = new JPanel();
 	content.setLayout(new BorderLayout());
-	content.add(game, BorderLayout.CENTER);
+	content.add(menuBar, BorderLayout.NORTH);
+	content.add(grid, BorderLayout.CENTER);
+
+	
 	setContentPane(content);
 	setTitle("soDoCa");
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,12 +38,17 @@ public class GameGrid extends JFrame implements ActionListener{ //this is the pa
   
     }    
     
-    public GameGrid(Game game){
-	this.game = game;
-	this.grid = new Grid(game);
+    public GameGrid(Game initialBoard){
+	this.initialBoard = initialBoard;
+	this.grid = new Grid(initialBoard);
+
+	
 	content = this.getContentPane();
 	content.setLayout(new BorderLayout());
-	content.add(game, BorderLayout.CENTER);
+	content.add(initialBoard, BorderLayout.CENTER);
+
+
+	
 	setContentPane(content);
 	setTitle("soDoCa");
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,14 +57,6 @@ public class GameGrid extends JFrame implements ActionListener{ //this is the pa
 	setLocationRelativeTo(null);
 	  
     }
-    
-    
-
-    
-@Override
-    public void actionPerformed(ActionEvent e){
-
-}
 
 
     public static void main (String[]args){

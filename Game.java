@@ -6,14 +6,18 @@ import java.awt.event.*;
 public class Game extends JComponent{
 
     private int[][] puzzleNums = new int[9][9];
+    
     public Game(){
 	for (int i = 0; i < 9 ; i++){
 	    for (int j = 0; j < 9 ; j++){
-		puzzleNums[i][j] = (i * 3 + i / 3 + j % 10);
+		puzzleNums[i][j] = j+1;
 	    }
 	}
     }
-    //going to have to write a constructor that takes in an int[][] and sets puzzleNums = to that
+
+    public Game(int[][] gameBoard){ //gunna have to modify this later
+	this();
+    }
 
     
     public void setNum(int r, int c, int x){
