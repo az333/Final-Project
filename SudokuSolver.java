@@ -6,42 +6,62 @@ import java.io.*; //file, filenotfoundexception
 public class SudokuSolver  {
 
     
-    public static Sudoku solveSudoku (Sudoku s) {
+    public static boolean solveSudoku (Sudoku s) {
 	int[][] board = s.getBoard();
-	ArrayList <Integer> numsinrow = new ArrayList <Integer> ();
-	ArrayList <Integer> numsincol = new ArrayList <Integer> ();
-	ArrayList <Integer> numsinsquare = new ArrayList <Integer> ();
-	for (int r = 0; r < board.length; r ++) {
-	    for ( int c = 0; c < board[r].length; c ++) {
-		if (board[r][c] == 10) {
-		    numsinrow = findNumsInRow (s, r);
-		    numsincol = findNumsInCol (s, c);
-		    numsinsquare = findNumsInSquare (s, r, c); 
-		    Random randgen = s.getRandgen ();
-		    int nextint = Math.abs(randgen.nextInt()) % 9 + 1;
-		    while (numsinrow.indexOf(nextint) != -1 ||
-			   numsincol.indexOf(nextint) != -1 ||
-			   numsinsquare.indexOf(nextint) != -1 &&
-			   (numsinrow.size() != 9 &&
-			    numsincol.size() != 9 &&
-			    numsinsquare.size() != 9)) {
-			nextint = Math.abs(randgen.nextInt()) % 9 + 1;
+	//System.out.println(s);
+	for (int row = 0; row < 9; row ++) {
+	    for (int col = 0; col < 9; col ++) {
+		//skip the number if its empty 
+		if (board[row][col] != 10) {
+		    continue;
+		}
+		//go through each number 1 - 9
+		for (int num = 1; num < 10; num++) {
+		    //if its legit then add it in that spot
+		    if (isLegit(s, row, col, num)) {
+			board[row][col] = num;
+
+			//recrusive step
+			if (solveSudoku(s)) {
+			    return true;
+			} else {
+			    board[row][col] = 10;
+			}
 		    }
-		    board[r][c] = nextint; 
-		}	
+		}
+       
+	      return false;
 	    }
 	}
-	s.setBoard(board);
-	return s;
+	return true;
     }
 
 
+    public static boolean isLegit (Sudoku s, int r, int c, int  num) {
+	ArrayList <Integer> numsinrow = findNumsInRow (s, r);
+	ArrayList <Integer> numsincol = findNumsInCol (s, c);
+	ArrayList <Integer> numsinsquare = findNumsInSquare (s, r, c);
+	//System.out.println ("Row " + numsinrow);
+	//System.out.println ("Col " +numsincol);
+	//System.out.println ("Sqaure " + numsinsquare); 
+	if (numsinrow.contains(num) && numsincol.contains(num) && numsinsquare.contains(num)) {
+		return true; 
+	    }
+	return false;
+    }
+	    
+
+    //all possible nums to put based on row 
     public static ArrayList<Integer> findNumsInRow (Sudoku s, int r) {
 	ArrayList <Integer> numsinrow = new ArrayList<Integer>();
+	for (int i = 1; i < 10; i ++) {
+	    numsinrow.add(i); 
+	}
+
 	int[][] board = s.getBoard();
 	for ( int c = 0; c < board[r].length; c ++) {
 	    if (board[r][c] != 10) {
-		numsinrow.add(board[r][c]); 
+		numsinrow.remove(Integer.valueOf(board[r][c])); 
 	    }
 	}
 	return numsinrow; 
@@ -51,10 +71,13 @@ public class SudokuSolver  {
 
     public static ArrayList<Integer> findNumsInCol (Sudoku s, int c) {
 	ArrayList <Integer> numsincol = new ArrayList <Integer> ();
+	for (int i = 1; i < 10; i ++) {
+	    numsincol.add(i); 
+	}
 	int [][] board = s.getBoard(); 
 	for (int r = 0; r < board.length; r ++) {
 	    if (board[r][c] != 10) {
-		numsincol.add(board[r][c]); 
+		numsincol.remove(Integer.valueOf(board[r][c])); 
 	    }
 	}
 	return numsincol;
@@ -64,17 +87,53 @@ public class SudokuSolver  {
     public static ArrayList<Integer> findNumsInSquare (Sudoku s, int r, int c) {
 	int [][] board = s.getBoard();
         ArrayList <Integer> numsinsquare = new ArrayList<Integer> ();
+	for (int i = 1; i < 10; i ++) {
+	    numsinsquare.add(i); 
+	}
 	int square = Sudoku.findSquare (r, c);
 	int firstrow = (r < 3) ? 0 : ( (r > 5) ? 6: 3); 
 	int firstcol = (c < 3) ? 0 : ( (c > 5) ? 6: 3);
 	for (int row = firstrow; row < firstrow + 3; row ++) {
 	    for (int col = firstcol; col < firstcol +3; col ++) {
 		if (board[row][col] != 10) {
-		    numsinsquare.add(board[row][col]);		 		
+		    numsinsquare.remove(Integer.valueOf(board[row][col]));		 		
 		}
 	    }
 	}
 	return numsinsquare;
+    }
+
+    public static void main (String[] args) {
+	Sudoku s = new Sudoku();
+	//	System.out.println(s);
+	solveSudoku(s);
+	//	System.out.println(s);
+	solveSudoku (s);
+
+	Sudoku ra = new Sudoku();
+	int[][] r = ra.getBoard();
+	r[0][0] = 6;
+	r[1][0] = 9;
+	r[7][0] = 2;
+	r[6][1] = 9;
+	r[0][3] = 4;
+	r[1][3] = 7;
+	r[4][3] = 6;
+	r[6][3] = 2;
+	r[3][4] = 3;
+	r[5][4] = 2;
+	r[2][5] = 5;
+	r[4][5] = 7;
+	r[7][5] = 3;
+	r[8][5] = 6;
+	r[2][7] = 9;
+	r[1][8] = 5;
+	r[7][8] = 8;
+	r[8][8] = 4;
+	System.out.println (ra);
+	solveSudoku(ra);
+	System.out.println (ra);
+
     }
 
 }
