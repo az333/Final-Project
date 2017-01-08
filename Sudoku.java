@@ -13,6 +13,11 @@ public class Sudoku {
 	this (2, (long)(Math.random()* 999999999), false);
     }
 
+    public Sudoku (int[][] gameboard) {
+	this ();
+	board = gameboard; 
+    } 
+
     
     public Sudoku (int diff, boolean showKey) { 
 	this (diff, (long)(Math.random()* 999999999), false); 
@@ -42,28 +47,31 @@ public class Sudoku {
 	}
     }
     
-    //max sum is 45 
-   
-    public void addNumber (int row, int col) {
-	int diffrow = 45 - sumRow(row);
-	int diffcol = 45 - sumCol(col);
-	int diffsquare = 45 - sumSquare(row,col);
-	int maxint  = (diffsquare < Math.min(diffrow, diffcol)) ? diffsquare: Math.min (diffrow, diffcol);
-	// if (maxint > 0) {
-	    //int nextint = randgen.nextInt(maxint + 1); 
-	//	}
-       
-	    }
 
-    private int sumRow (int r) {
-	return sumRow (r, board[r].length);
+    public int[][] getBoard() { return board; }
+
+    public void setBoard(int[][] board) { this.board = board; }
+
+    public int getDifficulty () {return difficulty; }
+
+    public void setDifficulty (int diff) { difficulty = diff; }
+
+    
+    public void addNumber (int row, int col) {
+       
+    }
+
+    
+    //max sum is 45
+    public int sumRow (int r) {
+	return sumRow (r, 0, board[r].length);
     }
 
     //non inclusive of endcol
-    private  int sumRow (int r, int endcol) {
+    public  int sumRow (int r, int startcol, int endcol) {
 	int sum = 0;
 	int[] row = board[r];
-	for (int index = 0; index < endcol; index ++) {
+	for (int index = startcol; index < endcol; index ++) {
 	    if (row[index] != 10) {
 		sum += row[index];
 	    }
@@ -72,12 +80,12 @@ public class Sudoku {
 	return sum;
     }
 
-    private int sumCol (int col) {
+    public int sumCol (int col) {
 	return sumCol (col, board.length );
     }
 
     //noninclusive of endrow
-    private int sumCol (int col, int endrow) {
+    public  int sumCol (int col, int endrow) {
 	int sum = 0;
 	for (int row = 0; row < endrow; row ++) {
 	    if (board[row][col] != 10) {
@@ -87,7 +95,19 @@ public class Sudoku {
 	return sum;
     }
 
-    private int findSquare (int row, int col) {
+     public  int sumSquare (int row, int col) {
+	int sum = 0;
+	int square = findSquare ( row,  col);
+	int firstrow = (row < 3) ? 0 : ( (row > 5) ? 6: 3); 
+	int firstcol = (col < 3) ? 0 : ( (col > 5) ? 6: 3);
+	for (int r = firstrow; r < firstrow + 3; r ++) {
+	    sum += sumRow(r, firstcol ,firstcol + 3);
+	}		   
+	return sum;
+    }
+
+
+    public static int findSquare (int row, int col) {
 	int square;
 	if (row  < 3) {
 	    square = ( col < 3) ? 1 : ( (col > 5) ?  3: 2);	    
@@ -100,16 +120,6 @@ public class Sudoku {
     }
 
 
-    private int sumSquare (int row, int col) {
-	int sum = 0;
-	int square = findSquare ( row,  col);
-	int firstrow = (row < 3) ? 0 : ( (row > 5) ? 6: 3); 
-	int firstcol = (col < 3) ? 0 : ( (col > 5) ? 6: 3);
-	for (int r = firstrow; r < firstrow + 3; r ++) {
-	    sum += sumRow(r, firstcol + 3);
-	}		   
-	return sum;
-    }
 
     public void fillWithNumbers () {
 	for (int row = 0; row < board.length; row ++) {
@@ -132,10 +142,7 @@ public class Sudoku {
 
     public static void main (String[] args) {
 	Sudoku a = new Sudoku ();
-	System.out.println (a);
-	System.out.println (a.sumRow(1));
-	System.out.println (a.sumCol(1));
-	System.out.println (a.sumSquare(1,4));
+
 	
 	
     } 
