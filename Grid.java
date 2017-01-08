@@ -51,25 +51,17 @@ public class Grid extends JComponent {
         for (int i = 0; i < puzzleSize; i++) {
             int yDisplacement = (i+1) * boxPixels - textOffset;
             for (int j = 0; j < puzzleSize; j++) {
-                if (initialBoard.getNum(i, j) != 0) {
-		    String value = boxValue(initialBoard.getNum(i,j));
+                if (initialBoard.getNum(i, j) > 0 && initialBoard.getNum(i, j) < 10) {
                     int xDisplacement = j * boxPixels + textOffset;
-                    g.drawString(value, xDisplacement, yDisplacement);
-                }
-            }
-        }
-    }
-
-
-    private String boxValue(int num){
-	String ans = "";
-	if (num < 10 && num > 0){
-	    ans = num + "";
+                    g.drawString("" + initialBoard.getNum(i,j), xDisplacement, yDisplacement);
+		}
+		else{
+		    int xDisplacement = j * boxPixels + textOffset;
+		    g.drawString("", xDisplacement, yDisplacement);
+		}
+	    }
 	}
-	return ans;
     }
-	
-    
 }
 
 
