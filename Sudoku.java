@@ -4,6 +4,7 @@ import java.io.*; //file, filenotfoundexception
 
 public class Sudoku { 
     private int[][] board;
+    private int[][] game; 
     private Random randgen;
     private int difficulty; //1 for easy, 2 for medium, 3 for hard
 
@@ -11,16 +12,17 @@ public class Sudoku {
     //default difficulty is medium
     public Sudoku () {
 	this (2, (long)(Math.random()* 999999999), false);
+	//fillWithNumbers ();
     }
 
     public Sudoku (int[][] gameboard) {
 	this ();
-	board = gameboard; 
+        this.setBoard(gameboard);
     } 
 
     
     public Sudoku (int diff, boolean showKey) { 
-	this (diff, (long)(Math.random()* 999999999), false); 
+	this (diff, (long)(Math.random()* 999999999), showKey); 
     }
 
     public Sudoku (int diff, long seed, boolean showKey) { 
@@ -28,7 +30,6 @@ public class Sudoku {
 	difficulty = diff; 
 	randgen = new Random(seed);
 	clear();
-	//fillWithNumbers ();
 	if (showKey) {
 	    // System.out.println(this);
 	} else { 
@@ -50,17 +51,18 @@ public class Sudoku {
 
     public int[][] getBoard() { return board; }
 
-    public void setBoard(int[][] board) { this.board = board; }
+    public void setBoard(int[][] board) {
+
+	for (int r= 0; r < board.length; r ++) {
+	    for (int c = 0; c < board[r].length; c ++) {
+	       this.board[r][c] = board[r][c];
+	    }
+	}
+    }
 
     public int getDifficulty () {return difficulty; }
 
     public void setDifficulty (int diff) { difficulty = diff; }
-
-    
-    public void addNumber (int row, int col) {
-       
-    }
-
     
     //max sum is 45
     public int sumRow (int r) {
@@ -95,7 +97,7 @@ public class Sudoku {
 	return sum;
     }
 
-     public  int sumSquare (int row, int col) {
+    public  int sumSquare (int row, int col) {
 	int sum = 0;
 	int square = findSquare ( row,  col);
 	int firstrow = (row < 3) ? 0 : ( (row > 5) ? 6: 3); 
@@ -120,13 +122,71 @@ public class Sudoku {
     }
 
 
-
-    public void fillWithNumbers () {
-	for (int row = 0; row < board.length; row ++) {
-	    for (int col = 0; col < board[row].length; col ++) {
-		addNumber (row, col);
-	    }
+    public static  boolean isSolvable (Sudoku a) {
+	Sudoku s = new Sudoku (a.getBoard());
+	SudokuSolver.solveSudoku(s);
+	//System.out.println ("Solveda " + a);
+	//System.out.println ("Solveds " + s);
+	if (SudokuSolver.validSums(s)) {
+	    // System.out.println ("issolvable " + a) ;
+	    return true; 
 	}
+	return false; 
+    }
+      
+    public boolean addNumber () {
+	// int row = Math.abs(randgen.nextInt() % 7) + 1;
+	//int col = Math.abs(randgen.nextInt() % 7) + 1;
+	    int num =  Math.abs(randgen.nextInt() % 9) + 1;
+
+	    for (int r = 0; r < board.length; r ++) {
+		for (int c = 0; c < board[r].length; c ++) {
+		    if (board[r][c] != 10) {
+			continue;
+		    } 
+		    while (!SudokuSolver.isLegit(this,r,c,num)) {
+			num =  Math.abs(randgen.nextInt() % 9) + 1;
+		    }
+		    board[r][c] = num;
+		    if (isSolvable(this)) {
+			return true;
+		    } else {
+			board[r][c] = 10;
+			addNumber(); 
+		}
+	    }
+	  
+		/*board[row][col] = num;
+		    // System.out.println ("addnumberinwhile " + this);
+	    if (isSolvable(this))  {
+			//System.out.println ("addnumberissovlable " + this);
+		return true;
+	    } else { 
+		board[row][col] = 10;
+		addNumber(); 
+	    }
+		    
+	    //System.out.println ("addnumberoutofwhile " + this);
+	    return false; */
+    
+	    }
+	    return false;
+    }
+    
+
+
+    public boolean fillWithNumbers () {
+	int numclues = Math.abs(randgen.nextInt()) % 5 + 10;
+	for (int i = 0; i < numclues; i ++) {
+	    //System.out.println (i);
+	    //System.out.println ("fillwithnumbers " + this);
+	    addNumber();
+	} 
+	game = board;
+	SudokuSolver.solveSudoku (this);
+	return true;
+		      
+	
     }
 
     public String toString () {
@@ -135,6 +195,7 @@ public class Sudoku {
 	    for (int c = 0; c < board[r].length; c ++) {
 		str = str +  board[r][c] + " ";
 	    }
+
 	    str += "\n";
 	}
 	return str; 
@@ -142,9 +203,11 @@ public class Sudoku {
 
     public static void main (String[] args) {
 	Sudoku a = new Sudoku ();
-
+	a.fillWithNumbers();
+	System.out.println (a);       
+	System.out.println (SudokuSolver.validSums(a));
 	
 	
     } 
 
-    }
+}

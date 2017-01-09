@@ -149,7 +149,30 @@ public class SudokuSolver  {
     }
 
     public static void main (String[] args) {
-	
+	/*
+	Sudoku ra = new Sudoku();
+	int[][] r = ra.getBoard();
+	r[0][0] = 6;
+	r[1][0] = 9;
+	r[7][0] = 2;
+ 	r[6][1] = 9;
+ 	r[0][3] = 4;
+ 	r[1][3] = 7;
+ 	r[4][3] = 6;
+ 	r[6][3] = 2;
+ 	r[3][4] = 3;
+ 	r[5][4] = 2;
+	r[2][5] = 5;
+ 	r[4][5] = 7;
+ 	r[7][5] = 3;
+ 	r[8][5] = 6;
+ 	r[2][7] = 9;
+ 	r[1][8] = 5;
+ 	r[7][8] = 8;
+ 	r[8][8] = 4;
+ 	System.out.println (ra);
+ 	solveSudoku(ra);
+ 	System.out.println (ra); */
     }
 
 }
