@@ -84,6 +84,7 @@ public class GameGrid extends JFrame{
 	setLocationRelativeTo(null);
      }
 
+    ///I need to add the part that lets you click on a box in the grid if that's possible 
 
     public static void main (String[]args){
 	GameGrid b = new GameGrid();
