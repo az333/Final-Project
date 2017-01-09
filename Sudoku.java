@@ -4,7 +4,6 @@ import java.io.*; //file, filenotfoundexception
 
 public class Sudoku { 
     private int[][] board;
-    private int[][] game; 
     private Random randgen;
     private int difficulty; //1 for easy, 2 for medium, 3 for hard
 
@@ -30,7 +29,7 @@ public class Sudoku {
     }
     
     public Sudoku (boolean showKey) { 
-	this (2, (long)(Math.random()* 999999999), showKey, false); 
+	this (2, showKey); 
     }
 
     public Sudoku (int diff, long seed, boolean showKey, boolean temp) {
@@ -41,13 +40,10 @@ public class Sudoku {
 	if (!temp) { 
 	    this.fillWithNumbers();
 	    if (showKey) {
-		//System.out.println(this);
-	    } else { 
 		this.removeMultiple();
-		//	System.out.println (this);
 	    }
-	}	
-    }
+	    }	
+	}
 
 	
     //Set all values on the board to 10
@@ -217,29 +213,47 @@ public class Sudoku {
     }
 
     public void removeMultiple () {
-	int numstoremove = Math.abs(randgen.nextInt()) % 5 + 10;
+	int numstoremove = 0;
+	// Easy: 32 - 45 removed
+	//Medium: 46 - 49 removed
+	//Hard: 50 - 53 
+	if (difficulty == 1) { 
+	    numstoremove = Math.abs(randgen.nextInt()) % 8 + 32;
+	} else if (difficulty == 2) {
+	     numstoremove = Math.abs(randgen.nextInt()) % 4 + 46;
+	} else {
+	    numstoremove = Math.abs(randgen.nextInt()) % 4 + 50;
+	}
 	for (int i =0; i < numstoremove; i ++) {
 	    removeNumber ();
 	}
     }
 
+    
+
+
     public String toString () {
 	String str = "";
 	for (int r = 0 ; r < board.length; r ++) {
 	    for (int c = 0; c < board[r].length; c ++) {
-		str = str +  board[r][c] + " ";
-	    }
+		if (board[r][c] == 10) { 
+		    str = str + "  ";  
+		} else 
+		    str = str +  board[r][c] + " ";
+		}			       
 
 	    str += "\n";
-	}
+    }
+	str += "\n\n";
 	return str; 
     }
 
     public static void main (String[] args) {
-	Sudoku a = new Sudoku (true);
-	//	System.out.println (a);
+	Sudoku a = new Sudoku (3, true);
+	System.out.println (a);
+	SudokuSolver.solveSudoku (a);
 	//a.removeMultiple();
-	//System.out.println (a);
+	System.out.println (a);
 	//	SudokuSolver.solveSudoku(a);
 	//System.out.println (a);
 	//System.out.println (SudokuSolver.validSums(a));
