@@ -24,9 +24,13 @@ public class Sudoku {
 	this.setBoard(gameboard);
     } 
 
-    
+
     public Sudoku (int diff, boolean showKey) { 
 	this (diff, (long)(Math.random()* 999999999), showKey, false); 
+    }
+    
+    public Sudoku (boolean showKey) { 
+	this (2, (long)(Math.random()* 999999999), showKey, false); 
     }
 
     public Sudoku (int diff, long seed, boolean showKey, boolean temp) {
@@ -36,12 +40,11 @@ public class Sudoku {
 	clear();
 	if (!temp) { 
 	    this.fillWithNumbers();
-	    //this.removeMultiple();
 	    if (showKey) {
-	    // System.out.println(this);
+		//System.out.println(this);
 	    } else { 
-	    //deleteSomeNumbers();
-	    // System.out.println (this);
+		this.removeMultiple();
+		//	System.out.println (this);
 	    }
 	}	
     }
@@ -233,13 +236,13 @@ public class Sudoku {
     }
 
     public static void main (String[] args) {
-	Sudoku a = new Sudoku ();
-	System.out.println (a);
-	a.removeMultiple();
-	System.out.println (a);
-	SudokuSolver.solveSudoku(a);
-	System.out.println (a);
-	System.out.println (SudokuSolver.validSums(a));
+	Sudoku a = new Sudoku (true);
+	//	System.out.println (a);
+	//a.removeMultiple();
+	//System.out.println (a);
+	//	SudokuSolver.solveSudoku(a);
+	//System.out.println (a);
+	//System.out.println (SudokuSolver.validSums(a));
 	
 	
     } 
