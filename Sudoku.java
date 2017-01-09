@@ -11,30 +11,38 @@ public class Sudoku {
 
     //default difficulty is medium
     public Sudoku () {
-	this (2, (long)(Math.random()* 999999999), false);
-	//fillWithNumbers ();
+	this (2, (long)(Math.random()* 999999999), false, false);
     }
 
     public Sudoku (int[][] gameboard) {
 	this ();
         this.setBoard(gameboard);
+    }
+
+    public Sudoku (int[][] gameboard, boolean temp) {
+	this (2 ,(long)(Math.random()* 999999999), false, temp);
+	this.setBoard(gameboard);
     } 
 
     
     public Sudoku (int diff, boolean showKey) { 
-	this (diff, (long)(Math.random()* 999999999), showKey); 
+	this (diff, (long)(Math.random()* 999999999), showKey, false); 
     }
 
-    public Sudoku (int diff, long seed, boolean showKey) { 
+    public Sudoku (int diff, long seed, boolean showKey, boolean temp) {
 	board = new int[9][9];
 	difficulty = diff; 
 	randgen = new Random(seed);
 	clear();
-	if (showKey) {
+	if (!temp) { 
+	    this.fillWithNumbers();
+	    //this.removeMultiple();
+	    if (showKey) {
 	    // System.out.println(this);
-	} else { 
+	    } else { 
 	    //deleteSomeNumbers();
 	    // System.out.println (this);
+	    }
 	}	
     }
 
@@ -122,8 +130,8 @@ public class Sudoku {
     }
 
 
-    public static  boolean isSolvable (Sudoku a) {
-	Sudoku s = new Sudoku (a.getBoard());
+    public static boolean isSolvable (Sudoku a) {
+	Sudoku s = new Sudoku (a.getBoard(), true);
 	SudokuSolver.solveSudoku(s);
 	//System.out.println ("Solveda " + a);
 	//System.out.println ("Solveds " + s);
@@ -135,10 +143,7 @@ public class Sudoku {
     }
       
     public boolean addNumber () {
-	// int row = Math.abs(randgen.nextInt() % 7) + 1;
-	//int col = Math.abs(randgen.nextInt() % 7) + 1;
 	    int num =  Math.abs(randgen.nextInt() % 9) + 1;
-
 	    for (int r = 0; r < board.length; r ++) {
 		for (int c = 0; c < board[r].length; c ++) {
 		    if (board[r][c] != 10) {
@@ -153,21 +158,8 @@ public class Sudoku {
 		    } else {
 			board[r][c] = 10;
 			addNumber(); 
-		}
-	    }
-	  
-		/*board[row][col] = num;
-		    // System.out.println ("addnumberinwhile " + this);
-	    if (isSolvable(this))  {
-			//System.out.println ("addnumberissovlable " + this);
-		return true;
-	    } else { 
-		board[row][col] = 10;
-		addNumber(); 
-	    }
-		    
-	    //System.out.println ("addnumberoutofwhile " + this);
-	    return false; */
+		    }
+		}   
     
 	    }
 	    return false;
@@ -182,11 +174,50 @@ public class Sudoku {
 	    //System.out.println ("fillwithnumbers " + this);
 	    addNumber();
 	} 
-	game = board;
+	//game = board;
+	//System.out.println (new Sudoku (game));
 	SudokuSolver.solveSudoku (this);
 	return true;
 		      
 	
+    }
+
+    public static  boolean isUnique (Sudoku s, int r, int c) {
+	int count = 0;
+	int temp = s.getBoard()[r][c];
+	for (int num = 1; num < 10; num ++) {
+	    s.getBoard()[r][c] = num;
+	    if (isSolvable(s)) {
+		count ++;
+	    }
+	}
+	s.getBoard()[r][c] = temp;
+	if (count > 1) {
+	    return false;
+	}
+
+	return true;
+    }
+
+    public boolean removeNumber () {
+	int row = Math.abs(randgen.nextInt()) % 9;
+	int col = Math.abs(randgen.nextInt()) % 9;
+	int temp = board[row][col];
+	board[row][col] = 10;
+	if (isSolvable(this) && isUnique (this,row,col)) { 
+	    return true;
+	} else  {
+	    board[row][col] = temp;
+	    removeNumber();
+	}
+	return false;
+    }
+
+    public void removeMultiple () {
+	int numstoremove = Math.abs(randgen.nextInt()) % 5 + 10;
+	for (int i =0; i < numstoremove; i ++) {
+	    removeNumber ();
+	}
     }
 
     public String toString () {
@@ -203,8 +234,11 @@ public class Sudoku {
 
     public static void main (String[] args) {
 	Sudoku a = new Sudoku ();
-	a.fillWithNumbers();
-	System.out.println (a);       
+	System.out.println (a);
+	a.removeMultiple();
+	System.out.println (a);
+	SudokuSolver.solveSudoku(a);
+	System.out.println (a);
 	System.out.println (SudokuSolver.validSums(a));
 	
 	
