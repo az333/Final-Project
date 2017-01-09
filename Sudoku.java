@@ -5,7 +5,8 @@ import java.io.*; //file, filenotfoundexception
 public class Sudoku { 
     private int[][] board;
     private Random randgen;
-    private int difficulty; //1 for easy, 2 for medium, 3 for hard
+    private long seed; 
+    private int difficulty; //0 -  4 (super easy - super hard)
 
 
     //default difficulty is medium
@@ -27,6 +28,10 @@ public class Sudoku {
     public Sudoku (int diff, boolean showKey) { 
 	this (diff, (long)(Math.random()* 999999999), showKey, false); 
     }
+
+    public Sudoku (int diff) {
+	this (diff, false);
+    }
     
     public Sudoku (boolean showKey) { 
 	this (2, showKey); 
@@ -34,12 +39,13 @@ public class Sudoku {
 
     public Sudoku (int diff, long seed, boolean showKey, boolean temp) {
 	board = new int[9][9];
-	difficulty = diff; 
+	difficulty = diff;
+	this.seed = seed;
 	randgen = new Random(seed);
 	clear();
 	if (!temp) { 
 	    this.fillWithNumbers();
-	    if (showKey) {
+	    if (!showKey) {
 		this.removeMultiple();
 	    }
 	    }	
@@ -166,19 +172,11 @@ public class Sudoku {
     
 
 
-    public boolean fillWithNumbers () {
-	int numclues = Math.abs(randgen.nextInt()) % 5 + 10;
-	for (int i = 0; i < numclues; i ++) {
-	    //System.out.println (i);
-	    //System.out.println ("fillwithnumbers " + this);
+    public void  fillWithNumbers () {
+	for (int i = 0; i < 81; i ++) {
 	    addNumber();
-	} 
-	//game = board;
-	//System.out.println (new Sudoku (game));
-	SudokuSolver.solveSudoku (this);
-	return true;
-		      
-	
+	}
+	//SudokuSolver.solveSudoku(this);	      	
     }
 
     public static  boolean isUnique (Sudoku s, int r, int c) {
@@ -214,15 +212,21 @@ public class Sudoku {
 
     public void removeMultiple () {
 	int numstoremove = 0;
-	// Easy: 32 - 45 removed
+	//Super Easy: < 31 removed
+	//Easy: 32 - 45 removed
 	//Medium: 46 - 49 removed
-	//Hard: 50 - 53 
-	if (difficulty == 1) { 
+	//Hard: 50 - 53 removed
+	//Super Hard: 55 - 59 removed
+	if (difficulty == 0) {
+	    numstoremove = Math.abs(randgen.nextInt()) % 30 + 1;
+	}else if (difficulty == 1) { 
 	    numstoremove = Math.abs(randgen.nextInt()) % 8 + 32;
 	} else if (difficulty == 2) {
 	     numstoremove = Math.abs(randgen.nextInt()) % 4 + 46;
-	} else {
+	} else if (difficulty == 3) {
 	    numstoremove = Math.abs(randgen.nextInt()) % 4 + 50;
+	}else {
+	    numstoremove = Math.abs(randgen.nextInt()) % 5  + 55;
 	}
 	for (int i =0; i < numstoremove; i ++) {
 	    removeNumber ();
@@ -233,7 +237,7 @@ public class Sudoku {
 
 
     public String toString () {
-	String str = "";
+	String str = "Seed: " + seed + "\n";
 	for (int r = 0 ; r < board.length; r ++) {
 	    for (int c = 0; c < board[r].length; c ++) {
 		if (board[r][c] == 10) { 
@@ -249,7 +253,7 @@ public class Sudoku {
     }
 
     public static void main (String[] args) {
-	Sudoku a = new Sudoku (3, true);
+	Sudoku a = new Sudoku (0);
 	System.out.println (a);
 	SudokuSolver.solveSudoku (a);
 	//a.removeMultiple();
