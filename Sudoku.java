@@ -150,7 +150,7 @@ public class Sudoku extends JComponent{
     public static boolean isSolvable (Sudoku a) {
 	Sudoku s = new Sudoku (a.getBoard(), true);
 	SudokuSolver.solveSudoku(s);
-	//System.out.println ("Solveda " + a);
+	//System.nout.println ("Solveda " + a);
 	//System.out.println ("Solveds " + s);
 	if (SudokuSolver.validSums(s)) {
 	    // System.out.println ("issolvable " + a) ;

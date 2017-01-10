@@ -33,6 +33,7 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
 	check.setActionCommand("check");
 	menuBar.add(reveal);
 	reveal.setActionCommand("reveal");
+	reveal.addActionListener(this);
 
 	JPanel sideBar = new JPanel();
 	sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
@@ -155,7 +156,7 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
 	int c = 0;
 	if (event.equals("reveal")){
 	    SudokuSolver.solveSudoku(initialBoard);
-	    System.out.println(initialBoard);
+	    // System.out.println(initialBoard);
 	    //validate();
 	    grid.repaint();
 	}

@@ -149,7 +149,7 @@ public class SudokuSolver  {
     }
 
     public static void main (String[] args) {
-<<<<<<< HEAD
+
 	/*
 	Sudoku ra = new Sudoku();
 =======
@@ -177,14 +177,9 @@ public class SudokuSolver  {
  	System.out.println (ra);
  	solveSudoku(ra);
  	System.out.println (ra); */
-<<<<<<< HEAD
-    }
-
+	    }
 }
+
+
     
-=======
-	
-    }
 
-}
->>>>>>> Donia
