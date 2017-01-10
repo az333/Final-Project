@@ -38,24 +38,34 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
 
 	JPanel sideBar = new JPanel();
 	sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
-	sideBar.add(one);
+	one.addActionListener(this);
 	one.setActionCommand("one");
-	sideBar.add(two);
+	sideBar.add(one);
+	two.addActionListener(this);
 	two.setActionCommand("two");
-	sideBar.add(three);
+	sideBar.add(two);
+	three.addActionListener(this);
 	three.setActionCommand("three");
-	sideBar.add(four);
+	sideBar.add(three);
+	four.addActionListener(this);
 	four.setActionCommand("four");
-	sideBar.add(five);
+	sideBar.add(four);
+	five.addActionListener(this);
 	five.setActionCommand("five");
-	sideBar.add(six);
+	sideBar.add(five);
+	six.addActionListener(this);
 	six.setActionCommand("six");
-	sideBar.add(seven);
+	sideBar.add(six);
+	seven.addActionListener(this);
 	seven.setActionCommand("seven");
-	sideBar.add(eight);
+	sideBar.add(seven);
+	eight.addActionListener(this);
 	eight.setActionCommand("eight");
-	sideBar.add(nine);
+	sideBar.add(eight);
+	nine.addActionListener(this);
 	nine.setActionCommand("nine");
+	sideBar.add(nine);
+	
 	
 
 	JPanel content = new JPanel();
@@ -143,78 +153,72 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
 
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
+	int r = 0;
+	int c = 0;
 	if (event.equals("reveal")){
-	    //   this.fillIn();
+	    SudokuSolver.solveSudoku(initialBoard);
+	    System.out.println(initialBoard.toString());
+	    //validate();
+	    grid.repaint();
 	}
-
 
 	if (event.equals("check")){
 	     //smthg
 	}	
 	
 	if (event.equals("one")){
-	    //g.drawString("1", xDis, yDis);
+	    initialBoard.setNum(r, c, 1);
+	    //validate();
+	    grid.repaint();
 	}
         if (event.equals("two")){
-	    //g.drawString("2", xDis, yDis);
+	    initialBoard.setNum(r, c, 2);
+	    //validate();
+	    grid.repaint();
 	}
 	if (event.equals("three")){
-	    //g.drawString("3", xDis, yDis);
+	    initialBoard.setNum(r, c, 3);
+	    //validate();
+	    grid.repaint();
 	}
 	if (event.equals("four")){
-	    //g.drawString("4", xDis, yDis);
+	    initialBoard.setNum(r, c, 4);
+	    //validate();
+	    grid.repaint();
 	}
         if (event.equals("five")){
-	    //g.drawString("5", xDis, yDis);
+	    initialBoard.setNum(r, c, 5);
+	    //validate();
+	    grid.repaint();
 	}
 	if (event.equals("six")){
-	    //g.drawString("6", xDis, yDis);
+	    initialBoard.setNum(r, c, 6);
+	    //validate();
+	    grid.repaint();
 	}
 	if (event.equals("seven")){
-	    //g.drawString("7", xDis, yDis);
+	    initialBoard.setNum(r, c, 7);
+	    //validate();
+	    grid.repaint();
 	}
 	if (event.equals("eight")){
-	    //g.drawString("8", xDis, yDis);
+	    initialBoard.setNum(r, c, 8);
+	    //validate();
+	    grid.repaint();
 	}
 	if (event.equals("nine")){
-	    //g.drawString("9", xDis, yDis);
+	    initialBoard.setNum(r, c, 9);
+	    //validate();
+	    grid.repaint();
 	}
 		
     }
 
-    public void fillIn(Graphics g){
-	int boxPixels = 50;
-        int puzzleSize = 9;
-        int textOffset = 15;
-        Font textFont = new Font ("Sansserif", Font.BOLD, 24);
-	g.setFont(textFont);
-	
-	SudokuSolver.solveSudoku(initialBoard);
-	int[][] board = new int[9][9];
-	board = initialBoard.getBoard();
-	Sudoku solvedBoard = new Sudoku(board);
-	for (int i = 0; i < puzzleSize; i++) {
-	    int yDisplacement = (i+1) * boxPixels - textOffset;
-	    for (int j = 0; j < puzzleSize; j++) {
-		if (solvedBoard.getNum(i, j) > 0 && solvedBoard.getNum(i, j) < 10) {
-		    int xDisplacement = j * boxPixels + textOffset;
-		    g.drawString("" + solvedBoard.getNum(i,j), xDisplacement, yDisplacement);
-		}
-	    }
-	}
-    }
 	
     public void drawNums(ActionEvent e, Graphics g){
 	
-        int boxPixels = 50;
-        int puzzleSize = 9;
-        int subSquare = 3;
-	int boardPixels = boxPixels * puzzleSize;
-        int textOffset = 15;
-        Font textFont = new Font ("Sansserif", Font.BOLD, 24);
 	int xDis = 0;
 	int yDis = 0;
-	g.setFont(textFont);
 	String event = e.getActionCommand();
 
     }
