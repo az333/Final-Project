@@ -9,8 +9,8 @@ public class SudokuSolver  {
     public static boolean solveSudoku (Sudoku s) {
 	int[][] board = s.getBoard();
 	//System.out.println(s);
-	for (int row = 0; row < 9; row ++) {
-	    for (int col = 0; col < 9; col ++) {
+	for (int row = 0; row < board.length; row ++) {
+	    for (int col = 0; col < board[row].length; col ++) {
 		//skip the number if its empty 
 		if (board[row][col] != 10) {
 		    continue;
@@ -103,37 +103,76 @@ public class SudokuSolver  {
 	return numsinsquare;
     }
 
-    public static void main (String[] args) {
-	Sudoku s = new Sudoku();
-	//	System.out.println(s);
-	solveSudoku(s);
-	//	System.out.println(s);
-	solveSudoku (s);
+    public static boolean validRowSums (Sudoku s) {
+	int sum = 0;
+	int[][] board = s.getBoard(); 
+	for (int r = 0; r < board.length; r ++) {
+	    sum = s.sumRow (r);
+	    if (sum != 45) {
+		return false;
+	    }
+	}
+	return true; 
+    }
 
+    public static boolean validColSums (Sudoku s) {
+	int sum = 0;
+	int[][] board = s.getBoard(); 
+	for (int c = 0; c < board[0].length; c ++) {
+	    sum = s.sumCol (c);
+	    if (sum != 45) {
+		return false;
+	    }
+	}
+	return true; 
+    }
+
+    public static boolean validSquareSums (Sudoku s) {
+	int sum = 0;
+	int[][] board = s.getBoard(); 
+	for (int r = 0; r < board.length; r ++) {
+	    for (int c = 0; c < board[r].length; c ++) {
+		sum = s.sumSquare (r, c);
+		if (sum != 45) {
+		    return false;
+		}
+	    }
+	}
+	return true; 
+    }
+
+    public static boolean validSums (Sudoku s) {
+	if (validRowSums (s) && validSquareSums (s) && validColSums (s)) {
+	    return true;
+	}
+	return false;
+    }
+
+    public static void main (String[] args) {
+	/*
 	Sudoku ra = new Sudoku();
 	int[][] r = ra.getBoard();
 	r[0][0] = 6;
 	r[1][0] = 9;
 	r[7][0] = 2;
-	r[6][1] = 9;
-	r[0][3] = 4;
-	r[1][3] = 7;
-	r[4][3] = 6;
-	r[6][3] = 2;
-	r[3][4] = 3;
-	r[5][4] = 2;
+ 	r[6][1] = 9;
+ 	r[0][3] = 4;
+ 	r[1][3] = 7;
+ 	r[4][3] = 6;
+ 	r[6][3] = 2;
+ 	r[3][4] = 3;
+ 	r[5][4] = 2;
 	r[2][5] = 5;
-	r[4][5] = 7;
-	r[7][5] = 3;
-	r[8][5] = 6;
-	r[2][7] = 9;
-	r[1][8] = 5;
-	r[7][8] = 8;
-	r[8][8] = 4;
-	System.out.println (ra);
-	solveSudoku(ra);
-	System.out.println (ra);
-
+ 	r[4][5] = 7;
+ 	r[7][5] = 3;
+ 	r[8][5] = 6;
+ 	r[2][7] = 9;
+ 	r[1][8] = 5;
+ 	r[7][8] = 8;
+ 	r[8][8] = 4;
+ 	System.out.println (ra);
+ 	solveSudoku(ra);
+ 	System.out.println (ra); */
     }
 
 }
