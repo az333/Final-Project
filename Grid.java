@@ -34,6 +34,7 @@ public class Grid extends JComponent {
     }
 
     private void drawGridLines(Graphics g) {
+	//this draws the grid by making lines every 50 pixels
         for (int i = 0; i <= puzzleSize; i++) {
             int acrossOrDown = i * boxPixels;
             g.drawLine(acrossOrDown, 0, acrossOrDown, boardPixels);
@@ -47,6 +48,7 @@ public class Grid extends JComponent {
     }
     
     private void drawCellValues(Graphics g) {
+	//this inputs the values into the boxes of the grid by going through the array and putting them in the right box
         g.setFont(textFont);
         for (int i = 0; i < puzzleSize; i++) {
             int yDisplacement = (i+1) * boxPixels - textOffset;
@@ -55,7 +57,7 @@ public class Grid extends JComponent {
                     int xDisplacement = j * boxPixels + textOffset;
                     g.drawString("" + initialBoard.getNum(i,j), xDisplacement, yDisplacement);
 		}
-		else{
+		else{//this makes the box empty if the number in the array is 10
 		    int xDisplacement = j * boxPixels + textOffset;
 		    g.drawString("", xDisplacement, yDisplacement);
 		}
