@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GameGrid extends JFrame implements MouseListener, ActionListener{ 
+
+    private int xBox;
+    private int yBox;
     
     private Sudoku initialBoard;
     private Grid grid;
@@ -12,6 +15,7 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
 
     private JButton check = new JButton("Check My Solution");
     private JButton reveal = new JButton("Reveal the Solution");
+    private JButton back = new JButton("Back to Menu");
 
     private JButton one = new JButton("1");
     private JButton two = new JButton("2");
@@ -23,18 +27,31 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
     private JButton eight = new JButton("8");
     private JButton nine = new JButton("9");
 
+    private JButton newGame = new JButton("New Game");
+    
+
     
     public GameGrid(){
+	xBox = 9;
+	yBox = 9;
+	
 	this.initialBoard = new Sudoku();
 	this.grid = new Grid(initialBoard);
 
 
 	JPanel menuBar = new JPanel();
 	menuBar.setLayout(new FlowLayout());
-	menuBar.add(check);
+	back.addActionListener(this);
+	back.setActionCommand("back");
+	menuBar.add(back);
+	check.addActionListener(this);
 	check.setActionCommand("check");
-	menuBar.add(reveal);
+	menuBar.add(check);
+	reveal.addActionListener(this);
 	reveal.setActionCommand("reveal");
+	menuBar.add(reveal);
+
+	
 
 	JPanel sideBar = new JPanel();
 	sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
@@ -65,7 +82,9 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
 	nine.addActionListener(this);
 	nine.setActionCommand("nine");
 	sideBar.add(nine);
-	
+	newGame.addActionListener(this);
+	newGame.setActionCommand("new game");
+	sideBar.add(newGame);
 	
 
 	JPanel content = new JPanel();
@@ -105,7 +124,7 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
 	setLocationRelativeTo(null);
      }
 
-    ///I need to add the part that lets you click on a box in the grid if that's possible
+    ///I need to add the mouseListener part
 
     
     /*Empty method definition. */
@@ -124,41 +143,86 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
     public void mouseExited(MouseEvent e) {
     }
     
+    //this is my job for today!
+    
     public void mouseClicked(MouseEvent e){
-	int xCor = e.getXOnScreen();
-	int yCor = e.getYOnScreen();
-	int[] pt = new int[2];
-	pt[0] = xCor;
-	pt[1] = yCor;
+	if (e.getXOnScreen() < 50){
+	    setBackground(Color.RED);
+	    grid.repaint();
+	    xBox = 0;
+	}
+	if (e.getXOnScreen() < 100){
+	    xBox = 1;
+	}
+	if (e.getXOnScreen() < 150){
+	    xBox = 2;
+	}
+	if (e.getXOnScreen() < 200){
+	    xBox = 3;
+	}
+	if (e.getXOnScreen() < 250){
+	    xBox = 4;
+	}
+	if (e.getXOnScreen() < 300){
+	    xBox = 5;
+	}
+	if (e.getXOnScreen() < 350){
+	    xBox = 6;
+	}
+	if (e.getXOnScreen() < 400){
+	    xBox = 7;
+	}
+	if (e.getXOnScreen() < 450){
+	    xBox = 8;
+	}
+	if (e.getYOnScreen() < 50){
+	    yBox = 0;
+	}
+	if (e.getYOnScreen() < 100){
+	    yBox = 1;
+	}
+	if (e.getYOnScreen() < 150){
+	    yBox = 2;
+	}
+	if (e.getYOnScreen() < 200){
+	    yBox = 3;
+	}
+	if (e.getYOnScreen() < 250){
+	    yBox = 4;
+	}
+	if (e.getYOnScreen() < 300){
+	    yBox = 5;
+	}
+	if (e.getYOnScreen() < 350){
+	    yBox = 6;
+	}
+	if (e.getYOnScreen() < 400){
+	    yBox = 7;
+	}
+	if (e.getYOnScreen() < 450){
+	    yBox = 8;
+	}
+	/*for (int i = 1; i * 50 < e.getXOnScreen(); i ++){
+	    xBox = i - 1;
+	}
+	for (int j = 1; j * 50 < e.getYOnScreen(); j ++){
+	    yBox = j - 1;
+	}
+	*/
     }
 
   
-    public static int xBox(int x){
-	int xbox = 0;
-	for (int i = 1; x < i * 50; i ++){
-	    xbox = i;
-	}
-
-	return xbox;
-    }
-
-    public static int yBox(int y){
-	int ybox = 0;
-	for (int j = 1; y < j * 50; j ++){
-	    ybox += j;
-	}
-	return ybox;
-    }
-
 
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	int r = 0;
 	int c = 0;
+	if (event.equals("back")){
+	    //smthg
+	}
+	
 	if (event.equals("reveal")){
 	    SudokuSolver.solveSudoku(initialBoard);
-	    System.out.println(initialBoard.toString());
-	    //validate();
 	    grid.repaint();
 	}
 
@@ -167,70 +231,52 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
 	}	
 	
 	if (event.equals("one")){
-	    initialBoard.setNum(r, c, 1);
-	    //validate();
+	    initialBoard.setNum(xBox, yBox, 1);
 	    grid.repaint();
 	}
         if (event.equals("two")){
-	    initialBoard.setNum(r, c, 2);
-	    //validate();
+	    initialBoard.setNum(xBox, yBox, 2);
 	    grid.repaint();
 	}
 	if (event.equals("three")){
-	    initialBoard.setNum(r, c, 3);
-	    //validate();
+	    initialBoard.setNum(xBox, yBox, 3);
 	    grid.repaint();
 	}
 	if (event.equals("four")){
-	    initialBoard.setNum(r, c, 4);
-	    //validate();
+	    initialBoard.setNum(xBox, yBox, 4);
 	    grid.repaint();
 	}
         if (event.equals("five")){
-	    initialBoard.setNum(r, c, 5);
-	    //validate();
+	    initialBoard.setNum(xBox, yBox, 5);
 	    grid.repaint();
 	}
 	if (event.equals("six")){
-	    initialBoard.setNum(r, c, 6);
-	    //validate();
+	    initialBoard.setNum(xBox, yBox, 6);
 	    grid.repaint();
 	}
 	if (event.equals("seven")){
-	    initialBoard.setNum(r, c, 7);
-	    //validate();
+	    initialBoard.setNum(xBox, yBox, 7);
 	    grid.repaint();
 	}
 	if (event.equals("eight")){
-	    initialBoard.setNum(r, c, 8);
-	    //validate();
+	    initialBoard.setNum(xBox, yBox, 8);
 	    grid.repaint();
 	}
 	if (event.equals("nine")){
-	    initialBoard.setNum(r, c, 9);
-	    //validate();
+	    initialBoard.setNum(xBox, yBox, 9);
+	    grid.repaint();
+	}
+
+	if (event.equals("new game")){
+	    Sudoku a = new Sudoku();
+	    initialBoard = a;
 	    grid.repaint();
 	}
 		
     }
 
-	
-    public void drawNums(ActionEvent e, Graphics g){
-	
-	int xDis = 0;
-	int yDis = 0;
-	String event = e.getActionCommand();
-
-    }
-	
-
-
-	    
-		
-	    
-    
-	
-
+       
+  
     public static void main (String[]args){
 	GameGrid b = new GameGrid();
 	b.setVisible(true);
