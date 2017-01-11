@@ -35,7 +35,7 @@ public class MenuPage extends JFrame implements ActionListener{
 	String event = e.getActionCommand();
 	if (event.equals("new")){
 	    GameGrid g = new GameGrid();
-	    g.setVisible (true);
+	    this.setContentPane(g.getContentPane()); 
 	}
 	if (event.equals("old")){
 	    //link to new puzzle?
