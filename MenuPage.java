@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MenuPage extends JFrame implements ActionListener{
+public class MenuPage extends JPanel{
  private Container pane;
  private JButton newGame;
  private JButton oldGame;
@@ -29,25 +29,14 @@ public class MenuPage extends JFrame implements ActionListener{
      pane.add(oldGame);
      pane.add(settings);
   }
-    public void actionPerformed(ActionEvent e){
-	String event = e.getActionCommand();
-	if (event.equals("new")){
-		//link to new puzzle?
-	}
-	if (event.equals("old")){
-	    //link to new puzzle?
-	}
-	if (event.equals("settings")){
-	    //link to settings?
-	}
-    }
 	    
-
+    /*
   //MAIN JUST INSTANTIATES + MAKE VISIBLE
   public static void main(String[] args) {
      MenuPage g = new MenuPage();
      g.setVisible(true);
   }
+    */
 }
 
 
