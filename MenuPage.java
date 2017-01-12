@@ -14,12 +14,14 @@ public class MenuPage extends JFrame implements ActionListener{
      this.setSize(500,500);
      this.setLocation(100,100);
      this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-    
+
      pane = this.getContentPane();
      pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));  //NOTE!! THIS CAN BE CHANGED (see below)
     
      newGame = new JButton("Play a New Game");
      newGame.setMaximumSize(new Dimension(Integer.MAX_VALUE, newGame.getMinimumSize().height));
+     newGame.addActionListener(this);
+     newGame.setActionCommand("new");
      oldGame = new JButton("Play an Old Game");
      oldGame.setMaximumSize(new Dimension(Integer.MAX_VALUE, oldGame.getMinimumSize().height));
      settings = new JButton("Settings");
@@ -32,7 +34,8 @@ public class MenuPage extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	if (event.equals("new")){
-		//link to new puzzle?
+	    GameGrid g = new GameGrid();
+	    this.setContentPane(g.getContentPane()); 
 	}
 	if (event.equals("old")){
 	    //link to new puzzle?
