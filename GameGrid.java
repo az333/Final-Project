@@ -146,9 +146,9 @@ public class GameGrid extends JFrame implements MouseListener, ActionListener{
     //this is my job for today!
     
     public void mouseClicked(MouseEvent e){
+	System.out.println("true");
 	if (e.getXOnScreen() < 50){
-	    setBackground(Color.RED);
-	    grid.repaint();
+	    System.out.println("true");
 	    xBox = 0;
 	}
 	if (e.getXOnScreen() < 100){
