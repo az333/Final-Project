@@ -127,7 +127,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
 	
 	board.setLayout(new BorderLayout());
-	board.add(menuBar, BorderLayout.NORTH);
+	board.add(menuBar, BorderLayout.SOUTH);
 	board.add(grid, BorderLayout.CENTER);
 	board.add(sideBar, BorderLayout.LINE_END);
 	grid.addMouseListener(this);
@@ -142,7 +142,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
 	//Setting up the Pane 
 	setTitle("soDoCa");
-	setSize(620,540);
+	setSize(620,500);
 	setLocation(100,100);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setResizable(false);
@@ -172,8 +172,8 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     }
     
     public void mouseClicked(MouseEvent e){
-	int x = e.getXOnScreen();
-	int y = e.getYOnScreen();
+	int x = e.getX();
+	int y = e.getY();
 	//System.out.println("true");
 	if (x > 330 && x < 380){
 	    xBox = 0;
@@ -229,10 +229,9 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	if (y > 600 && y < 650){
 	    yBox = 8;
 	}
-	System.out.println("" + x);
-	System.out.println("" + xBox);
-	System.out.println("" + y);
-	System.out.println("" + yBox);
+	System.out.println("( " + x+ ", " + y + ")");
+	System.out.println("XBox: " + xBox);
+	System.out.println("YBox: " + yBox);
     }
 
 
