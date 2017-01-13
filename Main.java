@@ -131,7 +131,9 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
 
 	//Creating the Old Puzzle Pane
-	
+
+
+	//Setting up the Pane 
 	setTitle("soDoCa");
 	setSize(620,540);
 	setLocation(100,100);
@@ -166,31 +168,31 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	int x = e.getXOnScreen();
 	int y = e.getYOnScreen();
 	//System.out.println("true");
-	if (x > 350 && x < 400){
+	if (x > 330 && x < 380){
 	    xBox = 0;
 	}
-	if (x > 400 && x < 450){
+	if (x > 380 && x < 430){
 	    xBox = 1;
 	}
-	if (x > 450 && x < 500){
+	if (x > 430 && x < 480){
 	    xBox = 2;
 	}
-	if (x > 500 && x < 550){
+	if (x > 480 && x < 530){
 	    xBox = 3;
 	}
-	if (x > 550 && x < 600){
+	if (x > 530 && x < 580){
 	    xBox = 4;
 	}
-	if (x > 600 && x < 650){
+	if (x > 580 && x < 630){
 	    xBox = 5;
 	}
-	if (x > 650 && x < 700){
+	if (x > 630 && x < 680){
 	    xBox = 6;
 	}
-	if (x > 700 && x < 750){
+	if (x > 680 && x < 730){
 	    xBox = 7;
 	}
-	if (x > 750 && x < 800){
+	if (x > 730 && x < 780){
 	    xBox = 8;
 	}
 	if (y > 200 && y < 250){
