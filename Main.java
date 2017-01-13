@@ -13,6 +13,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     private Container board;
 
     private Sudoku initialBoard;
+    private Sudoku solution;
     private Grid grid;
     
     private int xBox;
@@ -115,6 +116,13 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	sideBar.add(newGame);
 
 	this.initialBoard = new Sudoku();
+
+	Sudoku solution = new Sudoku (initialBoard.getBoard()); 
+	SudokuSolver.solveSudoku(solution);
+
+	//System.out.println (initialBoard);
+	 //System.out.println(solution);
+	    
 	this.grid = new Grid(initialBoard);
 
 	
@@ -254,7 +262,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	}
 	
 	if (event.equals("reveal")){
-	    SudokuSolver.solveSudoku(initialBoard);
+	    initialBoard.setBoard(solution.getBoard());
 	    repaint();
 	}
 
