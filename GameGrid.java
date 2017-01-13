@@ -165,15 +165,21 @@ public class GameGrid extends JPanel{
 	pack();
 	setLocationRelativeTo(null);
      }
+
+
+
  //Empty method definition. 
     public void mousePressed(MouseEvent e) {
     }
+
     //Empty method definition. 
     public void mouseReleased(MouseEvent e) {
     }
+
     //Empty method definition. 
     public void mouseEntered(MouseEvent e) {
     }
+
     //Empty method definition. 
     public void mouseExited(MouseEvent e) {
     }
@@ -243,11 +249,15 @@ public class GameGrid extends JPanel{
 	}
 	
     }
+
+
+
     
      public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	int r = 0;
 	int c = 0;
+
 	if (event.equals("back")){
 	    //smthg
 	}
@@ -293,10 +303,12 @@ public class GameGrid extends JPanel{
 	    initialBoard.setNum(xBox, yBox, 8);
 	    grid.repaint();
 	}
+
 	if (event.equals("nine")){
 	    initialBoard.setNum(xBox, yBox, 9);
 	    grid.repaint();
 	}
+
 	if (event.equals("new game")){
 	    Sudoku a = new Sudoku();
 	    initialBoard = a;
