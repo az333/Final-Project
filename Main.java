@@ -55,6 +55,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     private JButton backtopuzzle = new JButton("Back to Puzzle");
     private JButton newpuzzle = new JButton("New Puzzle");
     private JButton backtomenu = new JButton ("Back to Menu");
+    private Grid solutionGrid; 
 
 
     
@@ -64,7 +65,8 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	board = new Container();
 	old = new Container();
 	settingsPane = new Container();
-	difficulties = new Container(); 
+	difficulties = new Container();
+	solutionPane  = new Container();
         
 	
 	//Creating the Game Pane
@@ -180,6 +182,31 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	fourdiff.addActionListener(this);
 	fourdiff.setActionCommand("superhard");
 	difficulties.add(fourdiff);
+
+
+	//Creating the Solution Pane
+
+
+	JPanel solutionMenu = new JPanel();
+	solutionMenu.setLayout(new FlowLayout());
+	backtomenu.addActionListener(this);
+	backtomenu.setActionCommand("back");
+	solutionMenu.add(backtomenu);
+	newpuzzle.addActionListener(this);
+	newpuzzle.setActionCommand("new game");
+	solutionMenu.add(newpuzzle);
+	backtopuzzle.addActionListener(this);
+	backtopuzzle.setActionCommand("backtopuzzle");
+	solutionMenu.add(backtopuzzle);
+	Sudoku a = new Sudoku(initialBoard.getBoard());
+	SudokuSolver.solveSudoku(a);
+	solution = new Sudoku (a.getBoard());
+	//System.out.println (initialBoard);
+	//System.out.println (solution);
+	solutionGrid = new Grid (solution); 
+	solutionPane.setLayout(new BorderLayout());
+	solutionPane.add(solutionMenu, BorderLayout.SOUTH);
+	solutionPane.add(solutionGrid, BorderLayout.CENTER);
 
 	
 	
@@ -312,8 +339,9 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	}
 	
 	if (event.equals("reveal")){
-	    SudokuSolver.solveSudoku(initialBoard);
-	    repaint();
+	    setContentPane(solutionPane);
+	    setVisible(true);
+	    //repaint();
 	}
 
 	if (event.equals("check")){
@@ -391,7 +419,11 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	    setVisible(true);
 	    //System.out.println(initialBoard.getDifficulty());
 	}
-        
+        if (event.equals("backtopuzzle")) {
+	    setContentPane(board);
+	    grid.repaint();
+	    setVisible(true);
+	} 
      }
     
 
@@ -401,10 +433,4 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     }
 
-
-
-
-
-
 }
-
