@@ -11,6 +11,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     private JButton oldGame = new JButton("Play an Old Game");
     private JButton settings = new JButton("Settings");
     
+
     private Container board;
 
     private Sudoku initialBoard;
@@ -22,6 +23,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     private JButton check = new JButton("Check My Solution");
     private JButton reveal = new JButton("Reveal the Solution");
     private JButton back = new JButton("Back to Menu");
+    private JButton newfromgrid = new JButton("New Game");
 
     private JButton one = new JButton("1");
     private JButton two = new JButton("2");
@@ -35,13 +37,24 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     
 
-
-
     private Container old;
+
+    private Container difficulties;
+    private JButton zerodiff= new JButton("Super Easy");
+    private JButton onediff = new JButton("Easy");
+    private JButton twodiff = new JButton("Medium");
+    private JButton threediff = new JButton("Hard");
+    private JButton fourdiff = new JButton("Super Hard");
+    
 
     private Container settingsPane;
     
 
+    private Container solutionPane;
+    private Sudoku solution;
+    private JButton backtopuzzle = new JButton("Back to Puzzle");
+    private JButton newpuzzle = new JButton("New Puzzle");
+    private JButton backtomenu = new JButton ("Back to Menu");
 
 
     
@@ -51,21 +64,8 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	board = new Container();
 	old = new Container();
 	settingsPane = new Container();
-	
-	//Creating the Menu Pane
-	menu.setLayout(new BoxLayout(menu,BoxLayout.Y_AXIS));
-	newGame.setMaximumSize(new Dimension(Integer.MAX_VALUE, newGame.getMinimumSize().height));
-	newGame.addActionListener(this);
-	newGame.setActionCommand("new game");
-	menu.add(newGame);
-	oldGame.setMaximumSize(new Dimension(Integer.MAX_VALUE, oldGame.getMinimumSize().height));
-	oldGame.addActionListener(this);
-	oldGame.setActionCommand("old game");
-	menu.add(oldGame);
-	settings.setMaximumSize(new Dimension (Integer.MAX_VALUE, settings.getMinimumSize().height));
-	settings.addActionListener(this);
-	settings.setActionCommand("settings");
-	menu.add(settings);
+	difficulties = new Container(); 
+        
 	
 	//Creating the Game Pane
 
@@ -113,19 +113,40 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	nine.addActionListener(this);
 	nine.setActionCommand("nine");
 	sideBar.add(nine);
-	sideBar.add(newGame);
+	newfromgrid.addActionListener(this);
+	newfromgrid.setActionCommand("new game");
+	sideBar.add(newfromgrid);
 
 	this.initialBoard = new Sudoku();
-	this.grid = new Grid(initialBoard);
+	this.grid = new Grid(initialBoard); 
 
 	
 	board.setLayout(new BorderLayout());
-	board.add(menuBar, BorderLayout.NORTH);
+	board.add(menuBar, BorderLayout.SOUTH);
 	board.add(grid, BorderLayout.CENTER);
 	board.add(sideBar, BorderLayout.LINE_END);
 	grid.addMouseListener(this);
-	addMouseListener(this);
+	addMouseListener(this); 
 
+		
+	//Creating the Menu Pane
+	menu.setLayout(new BoxLayout(menu,BoxLayout.Y_AXIS));
+	newGame.setMaximumSize(new Dimension(Integer.MAX_VALUE, newGame.getMinimumSize().height));
+	newGame.addActionListener(this);
+	newGame.setActionCommand("new game");
+	menu.add(newGame);
+	
+	oldGame.setMaximumSize(new Dimension(Integer.MAX_VALUE, oldGame.getMinimumSize().height));
+	oldGame.addActionListener(this);
+	oldGame.setActionCommand("old game");
+	menu.add(oldGame);
+	
+	settings.setMaximumSize(new Dimension (Integer.MAX_VALUE, settings.getMinimumSize().height));
+	settings.addActionListener(this);
+	settings.setActionCommand("settings");
+	menu.add(settings);
+
+	
 	//Creating the Settings Pane
 
 
@@ -133,40 +154,72 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	//Creating the Old Puzzle Pane
 
 
+	//Creating the Difficulties Pane
+	difficulties.setLayout(new BoxLayout(difficulties,BoxLayout.Y_AXIS));
+	zerodiff.setMaximumSize(new Dimension(Integer.MAX_VALUE, zerodiff.getMinimumSize().height));
+	zerodiff.addActionListener(this);
+	zerodiff.setActionCommand("supereasy");
+	difficulties.add(zerodiff);
+
+	onediff.setMaximumSize(new Dimension(Integer.MAX_VALUE, onediff.getMinimumSize().height));
+	onediff.addActionListener(this);
+	onediff.setActionCommand("easy");
+	difficulties.add(onediff);
+
+	twodiff.setMaximumSize(new Dimension(Integer.MAX_VALUE, twodiff.getMinimumSize().height));
+	twodiff.addActionListener(this);
+	twodiff.setActionCommand("medium");
+	difficulties.add(twodiff);
+
+	threediff.setMaximumSize(new Dimension(Integer.MAX_VALUE, threediff.getMinimumSize().height));
+	threediff.addActionListener(this);
+	threediff.setActionCommand("hard");
+	difficulties.add(threediff);
+
+	fourdiff.setMaximumSize(new Dimension(Integer.MAX_VALUE, fourdiff.getMinimumSize().height));
+	fourdiff.addActionListener(this);
+	fourdiff.setActionCommand("superhard");
+	difficulties.add(fourdiff);
+
+	
+	
 	//Setting up the Pane 
 	setTitle("soDoCa");
-	setSize(620,540);
+	setSize(620,500);
 	setLocation(100,100);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setResizable(false);
-	setContentPane(board);
+	setContentPane(menu);
 	//pack();
 	setLocationRelativeTo(null);
-	
+	setVisible(true);
     }
     
 
-
-
-    /*Empty method definition. */
-    public void mousePressed(MouseEvent e) {
+    
+    
+    //Empty method definition. 
+     public void mousePressed(MouseEvent e) {
     }
 
-    /* Empty method definition. */
+    // Empty method definition. 
     public void mouseReleased(MouseEvent e) {
     }
 
-    /* Empty method definition. */
+    // Empty method definition. 
     public void mouseEntered(MouseEvent e) {
     }
 
-    /* Empty method definition. */
+    // Empty method definition. 
     public void mouseExited(MouseEvent e) {
     }
+
+    
     
     public void mouseClicked(MouseEvent e){
-	int x = e.getXOnScreen();
-	int y = e.getYOnScreen();
+	/*
+	int x = e.getX();
+	int y = e.getY();
 	//System.out.println("true");
 	if (x > 330 && x < 380){
 	    xBox = 0;
@@ -222,10 +275,11 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	if (y > 600 && y < 650){
 	    yBox = 8;
 	}
-	System.out.println("" + x);
-	System.out.println("" + xBox);
-	System.out.println("" + y);
-	System.out.println("" + yBox);
+	System.out.println("( " + x+ ", " + y + ")");
+	System.out.println("XBox: " + xBox);
+	System.out.println("YBox: " + yBox);
+
+	*/
     }
 
 
@@ -235,8 +289,9 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	int c = 0;
 
 	if (event.equals("new game")){
-	    setContentPane(board);
-	    repaint();
+	    setContentPane(difficulties);
+	    setVisible(true);
+	    // repaint();
 	}
 
 	if (event.equals("old game")){
@@ -251,7 +306,9 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
 	if (event.equals("back")){
 	    setContentPane(menu);
-	    repaint();
+	    setVisible(true);
+	    //repaint();
+	    
 	}
 	
 	if (event.equals("reveal")){
@@ -299,20 +356,49 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	    initialBoard.setNum(yBox, xBox, 9);
 	    grid.repaint();
 	}
-
-	if (event.equals("new game")){
-	    Sudoku a = new Sudoku();
-	    initialBoard = a;
+	if (event.equals("supereasy")){
+	    setContentPane(board);
+	    initialBoard = new Sudoku (0);
 	    grid.repaint();
-     
+	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
 	}
+        if (event.equals("easy")){
+	   setContentPane(board);
+	    initialBoard = new Sudoku (1);
+	    grid.repaint();
+	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
+	}
+	if (event.equals("medium")){
+	    setContentPane(board);
+	    initialBoard = new Sudoku (2);
+	    grid.repaint();
+	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
+	}
+	if (event.equals("hard")){
+	    setContentPane(board);
+	    initialBoard = new Sudoku (3);
+	    grid.repaint();
+	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
+	}
+        if (event.equals("superhard")){
+	    setContentPane(board);
+	    initialBoard = new Sudoku (4);
+	    grid.repaint();
+	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
+	}
+        
      }
-	
+    
 
 
     public static void main (String[]args){
 	Main a = new Main();
-	a.setVisible(true);
+
     }
 
 
@@ -321,3 +407,4 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
 
 }
+

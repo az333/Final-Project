@@ -1,8 +1,11 @@
 import java.util.*; //random, scanner, arraylist
 import java.io.*; //file, filenotfoundexception
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 //import java.math.BigInteger;
 
-public class Sudoku { 
+public class Sudoku extends JComponent{ 
     private int[][] board;
     private Random randgen;
     private long seed; 
@@ -24,7 +27,6 @@ public class Sudoku {
 	this.setBoard(gameboard);
     } 
 
-
     public Sudoku (int diff, boolean showKey) { 
 	this (diff, (long)(Math.random()* 999999999), showKey, false); 
     }
@@ -32,7 +34,7 @@ public class Sudoku {
     public Sudoku (int diff) {
 	this (diff, false);
     }
-    
+
     public Sudoku (boolean showKey) { 
 	this (2, showKey); 
     }
@@ -50,7 +52,7 @@ public class Sudoku {
 	    }
 	    }	
 	}
-
+   
 	
     //Set all values on the board to 10
     private void clear(){		
@@ -60,7 +62,15 @@ public class Sudoku {
 	    }
 	}
     }
-    
+
+
+    public int getNum(int r, int c){
+	return board[r][c];
+     }
+
+    public void setNum(int r, int c, int x){
+	board[r][c] = x;
+    }
 
     public int[][] getBoard() { return board; }
 
@@ -76,7 +86,9 @@ public class Sudoku {
     public int getDifficulty () {return difficulty; }
 
     public void setDifficulty (int diff) { difficulty = diff; }
-    
+
+    public long getSeed () { return seed; }
+
     //max sum is 45
     public int sumRow (int r) {
 	return sumRow (r, 0, board[r].length);
@@ -138,7 +150,7 @@ public class Sudoku {
     public static boolean isSolvable (Sudoku a) {
 	Sudoku s = new Sudoku (a.getBoard(), true);
 	SudokuSolver.solveSudoku(s);
-	//System.out.println ("Solveda " + a);
+	//System.nout.println ("Solveda " + a);
 	//System.out.println ("Solveds " + s);
 	if (SudokuSolver.validSums(s)) {
 	    // System.out.println ("issolvable " + a) ;
@@ -228,7 +240,8 @@ public class Sudoku {
 	}else {
 	    numstoremove = Math.abs(randgen.nextInt()) % 5  + 55;
 	}
-	for (int i =0; i < numstoremove; i ++) {
+
+	for (int i = 0; i < numstoremove; i ++) {
 	    removeNumber ();
 	}
     }
@@ -254,10 +267,11 @@ public class Sudoku {
 
     public static void main (String[] args) {
 	Sudoku a = new Sudoku (0);
-	System.out.println (a);
-	SudokuSolver.solveSudoku (a);
+
+	//System.out.println (a);
+	//SudokuSolver.solveSudoku (a); 
 	//a.removeMultiple();
-	System.out.println (a);
+	//System.out.println (a); 
 	//	SudokuSolver.solveSudoku(a);
 	//System.out.println (a);
 	//System.out.println (SudokuSolver.validSums(a));
