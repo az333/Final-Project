@@ -71,6 +71,11 @@ public class Sudoku extends JComponent{
     public void setNum(int r, int c, int x){
 	board[r][c] = x;
     }
+
+    public int getSeed(){
+	return (int) this.seed;
+    }
+    
     
 
     public int[][] getBoard() { return board; }

@@ -11,17 +11,20 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     private JButton oldGame = new JButton("Play an Old Game");
     private JButton settings = new JButton("Settings");
     
+
     private Container board;
 
     private Sudoku initialBoard;
     private Grid grid;
+    private JLabel seedUnchange;
     
     private int xBox;
     private int yBox;
 
-    private JButton check = new JButton("Check My Solution");
-    private JButton reveal = new JButton("Reveal the Solution");
+    private JButton check = new JButton("Check");
+    private JButton reveal = new JButton("Reveal");
     private JButton back = new JButton("Back to Menu");
+    private JButton newfromgrid = new JButton("New Game");
 
     private JButton one = new JButton("1");
     private JButton two = new JButton("2");
@@ -35,40 +38,127 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     
 
-
-
     private Container old;
+
+    private JTextField seedNum = new JTextField(9);
+    private JButton submitted = new JButton("Display -->");
+    
+    private Container difficulties;
+    private JButton zerodiff= new JButton("Super Easy");
+    private JButton onediff = new JButton("Easy");
+    private JButton twodiff = new JButton("Medium");
+    private JButton threediff = new JButton("Hard");
+    private JButton fourdiff = new JButton("Super Hard");
+    
 
     private Container settingsPane;
     
 
+    private Container solutionPane;
+    private Sudoku solution;
+    private JButton backtopuzzle = new JButton("Back to Puzzle");
+    private JButton newpuzzle = new JButton("New Puzzle");
+    private JButton backtomenu = new JButton ("Back to Menu");
+    private Grid solutionGrid; 
 
 
+    public Main() {
+	this (new Sudoku(2));
+    }
     
-    public Main(){
+    public Main(Sudoku s){
 
         menu = new Container();
-	board = new Container();
+	//board = new Container();
 	old = new Container();
 	settingsPane = new Container();
+	difficulties = new Container();
+	//solutionPane  = new Container();
+
 	
+	setBoard(s);
+	setMenu();
+	setDifficulties();
+	setOldGame(0);
+
+
+	addMouseListener(this);
+
+	//Setting up the Pane 
+	setTitle("soDoCa");
+	setSize(600,520);
+	setLocation(100,100);
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setResizable(false);
+	setContentPane(menu);
+	//pack();
+	setLocationRelativeTo(null);
+	//	setVisible(true);
+    }
+
+
+    public void setDifficulties() {
+	difficulties.setLayout(new BoxLayout(difficulties,BoxLayout.Y_AXIS));
+	zerodiff.setMaximumSize(new Dimension(Integer.MAX_VALUE, zerodiff.getMinimumSize().height));
+	zerodiff.addActionListener(this);
+	zerodiff.setActionCommand("supereasy");
+	difficulties.add(zerodiff);
+
+	onediff.setMaximumSize(new Dimension(Integer.MAX_VALUE, onediff.getMinimumSize().height));
+	onediff.addActionListener(this);
+	onediff.setActionCommand("easy");
+	difficulties.add(onediff);
+
+	twodiff.setMaximumSize(new Dimension(Integer.MAX_VALUE, twodiff.getMinimumSize().height));
+	twodiff.addActionListener(this);
+	twodiff.setActionCommand("medium");
+	difficulties.add(twodiff);
+
+	threediff.setMaximumSize(new Dimension(Integer.MAX_VALUE, threediff.getMinimumSize().height));
+	threediff.addActionListener(this);
+	threediff.setActionCommand("hard");
+	difficulties.add(threediff);
+
+	fourdiff.setMaximumSize(new Dimension(Integer.MAX_VALUE, fourdiff.getMinimumSize().height));
+	fourdiff.addActionListener(this);
+	fourdiff.setActionCommand("superhard");
+	difficulties.add(fourdiff);
+    }
+
+    
+    public void setMenu () {
 	//Creating the Menu Pane
 	menu.setLayout(new BoxLayout(menu,BoxLayout.Y_AXIS));
 	newGame.setMaximumSize(new Dimension(Integer.MAX_VALUE, newGame.getMinimumSize().height));
 	newGame.addActionListener(this);
 	newGame.setActionCommand("new game");
 	menu.add(newGame);
+	
 	oldGame.setMaximumSize(new Dimension(Integer.MAX_VALUE, oldGame.getMinimumSize().height));
 	oldGame.addActionListener(this);
 	oldGame.setActionCommand("old game");
 	menu.add(oldGame);
+	
 	settings.setMaximumSize(new Dimension (Integer.MAX_VALUE, settings.getMinimumSize().height));
 	settings.addActionListener(this);
 	settings.setActionCommand("settings");
 	menu.add(settings);
+    }
+    
+    public void setBoard (Sudoku s) {
+
+	board = new Container();
+	board.setLayout(new BorderLayout());
+        
+	//grid.addMouseListener(this);
+	addMouseListener(this);
 	
 	//Creating the Game Pane
 
+	initialBoard = s;
+	grid = new Grid (initialBoard);
+	
+        		
 	xBox = 9;
 	yBox = 9;
 	
@@ -83,6 +173,106 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	reveal.addActionListener(this);
 	reveal.setActionCommand("reveal");
 	menuBar.add(reveal);
+
+	JPanel sideBar = new JPanel();
+	sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
+	seedUnchange = new JLabel ("Seed #" + initialBoard.getSeed() + "\n");
+	sideBar.add(seedUnchange);
+	one.addActionListener(this);
+	one.setActionCommand("one");
+	sideBar.add(one);
+	two.addActionListener(this);
+	two.setActionCommand("two");
+	sideBar.add(two);
+	three.addActionListener(this);
+	three.setActionCommand("three");
+	sideBar.add(three);
+	four.addActionListener(this);
+	four.setActionCommand("four");
+	sideBar.add(four);
+	five.addActionListener(this);
+	five.setActionCommand("five");
+	sideBar.add(five);
+	six.addActionListener(this);
+	six.setActionCommand("six");
+	sideBar.add(six);
+	seven.addActionListener(this);
+	seven.setActionCommand("seven");
+	sideBar.add(seven);
+	eight.addActionListener(this);
+	eight.setActionCommand("eight");
+	sideBar.add(eight);
+	nine.addActionListener(this);
+	nine.setActionCommand("nine");
+	sideBar.add(nine);
+	newfromgrid.addActionListener(this);
+	newfromgrid.setActionCommand("new game");
+	sideBar.add(newfromgrid);
+	//board.add(grid, BorderLayout.CENTER);
+        		
+	board.add(menuBar, BorderLayout.SOUTH);
+	board.add(sideBar, BorderLayout.LINE_END);
+	board.add(grid, BorderLayout.CENTER);
+
+
+	//Creating the Solution Pane
+
+	solutionPane  = new Container();
+
+	JPanel solutionMenu = new JPanel();
+	solutionMenu.setLayout(new FlowLayout());
+	backtomenu.addActionListener(this);
+	backtomenu.setActionCommand("back");
+	solutionMenu.add(backtomenu);
+	newpuzzle.addActionListener(this);
+	newpuzzle.setActionCommand("new game");
+	solutionMenu.add(newpuzzle);
+	backtopuzzle.addActionListener(this);
+	backtopuzzle.setActionCommand("backtopuzzle");
+	solutionMenu.add(backtopuzzle);
+	Sudoku a = new Sudoku(initialBoard.getBoard());
+	SudokuSolver.solveSudoku(a);
+	solution = new Sudoku (a.getBoard());
+	//System.out.println ("Constructor: " + solution);
+	//System.out.println (solution);
+	solutionGrid = new Grid (solution); 
+	solutionPane.setLayout(new BorderLayout());
+	solutionPane.add(solutionMenu, BorderLayout.SOUTH);
+	solutionPane.add(solutionGrid, BorderLayout.CENTER);
+    }
+
+    private void setOldGame(int seed){
+
+	
+	old = new Container();
+	old.setLayout(new BorderLayout());
+        
+	//grid.addMouseListener(this);
+	addMouseListener(this);
+	
+	//Creating the Game Pane
+
+	initialBoard = new Sudoku(seed);
+	grid = new Grid(initialBoard);
+	
+	xBox = 9;
+	yBox = 9;
+	
+	JPanel menuBar = new JPanel();
+	menuBar.setLayout(new FlowLayout());
+	back.addActionListener(this);
+	back.setActionCommand("back");
+	menuBar.add(back);
+	check.addActionListener(this);
+	check.setActionCommand("check");
+	menuBar.add(check);
+	reveal.addActionListener(this);
+	reveal.setActionCommand("reveal");
+	menuBar.add(reveal);
+	submitted.addActionListener(this);
+	submitted.setActionCommand("submitted");
+	menuBar.add(submitted);
+	menuBar.add(seedNum);
 
 	JPanel sideBar = new JPanel();
 	sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
@@ -113,118 +303,122 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	nine.addActionListener(this);
 	nine.setActionCommand("nine");
 	sideBar.add(nine);
-	sideBar.add(newGame);
-
-	this.initialBoard = new Sudoku();
-	this.grid = new Grid(initialBoard);
-
-	
-	board.setLayout(new BorderLayout());
-	board.add(menuBar, BorderLayout.SOUTH);
-	board.add(grid, BorderLayout.CENTER);
-	board.add(sideBar, BorderLayout.LINE_END);
-	grid.addMouseListener(this);
-	addMouseListener(this);
-
-	//Creating the Settings Pane
+	newfromgrid.addActionListener(this);
+	newfromgrid.setActionCommand("new game");
+	sideBar.add(newfromgrid);
+	//board.add(grid, BorderLayout.CENTER);
+        		
+	old.add(menuBar, BorderLayout.SOUTH);
+	old.add(sideBar, BorderLayout.LINE_END);
+	old.add(grid, BorderLayout.CENTER);
 
 
+	//Creating the Solution Pane
 
-	//Creating the Old Puzzle Pane
+	solutionPane  = new Container();
 
-
-	//Setting up the Pane 
-	setTitle("soDoCa");
-	setSize(620,500);
-	setLocation(100,100);
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	setResizable(false);
-	setContentPane(board);
-	//pack();
-	setLocationRelativeTo(null);
-	
+	JPanel solutionMenu = new JPanel();
+	solutionMenu.setLayout(new FlowLayout());
+	backtomenu.addActionListener(this);
+	backtomenu.setActionCommand("back");
+	solutionMenu.add(backtomenu);
+	newpuzzle.addActionListener(this);
+	newpuzzle.setActionCommand("new game");
+	solutionMenu.add(newpuzzle);
+	backtopuzzle.addActionListener(this);
+	backtopuzzle.setActionCommand("backtopuzzle");
+	solutionMenu.add(backtopuzzle);
+	Sudoku a = new Sudoku(initialBoard.getBoard());
+	SudokuSolver.solveSudoku(a);
+	solution = new Sudoku (a.getBoard());
+	//System.out.println ("Constructor: " + solution);
+	//System.out.println (solution);
+	solutionGrid = new Grid (solution); 
+	solutionPane.setLayout(new BorderLayout());
+	solutionPane.add(solutionMenu, BorderLayout.SOUTH);
+	solutionPane.add(solutionGrid, BorderLayout.CENTER);
     }
+
     
-
-
-
-    /*Empty method definition. */
-    public void mousePressed(MouseEvent e) {
+    //Empty method definition. 
+     public void mousePressed(MouseEvent e) {
     }
 
-    /* Empty method definition. */
+    // Empty method definition. 
     public void mouseReleased(MouseEvent e) {
     }
-
-    /* Empty method definition. */
+    // Empty method definition. 
     public void mouseEntered(MouseEvent e) {
     }
 
-    /* Empty method definition. */
+    // Empty method definition. 
     public void mouseExited(MouseEvent e) {
     }
+
+    
     
     public void mouseClicked(MouseEvent e){
 	int x = e.getX();
 	int y = e.getY();
 	//System.out.println("true");
-	if (x > 330 && x < 380){
+	if (x > 0 && x < 50){
 	    xBox = 0;
 	}
-	if (x > 380 && x < 430){
+	if (x > 50 && x < 100){
 	    xBox = 1;
 	}
-	if (x > 430 && x < 480){
+	if (x > 100 && x < 150){
 	    xBox = 2;
 	}
-	if (x > 480 && x < 530){
+	if (x > 150 && x < 200){
 	    xBox = 3;
 	}
-	if (x > 530 && x < 580){
+	if (x > 200 && x < 250){
 	    xBox = 4;
 	}
-	if (x > 580 && x < 630){
+	if (x > 250 && x < 300){
 	    xBox = 5;
 	}
-	if (x > 630 && x < 680){
+	if (x > 300 && x < 350){
 	    xBox = 6;
 	}
-	if (x > 680 && x < 730){
+	if (x > 350 && x < 400){
 	    xBox = 7;
 	}
-	if (x > 730 && x < 780){
+	if (x > 400 && x < 450){
 	    xBox = 8;
 	}
-	if (y > 200 && y < 250){
+	if (y > 25 && y < 75){
 	    yBox = 0;
 	}
-	if (y > 250 && y < 300){
+	if (y > 75 && y < 125){
 	    yBox = 1;
 	}
-	if (y > 300 && y < 350){
+	if (y > 125 && y < 175){
 	    yBox = 2;
 	}
-	if (y > 350 && y < 400){
+	if (y > 175 && y < 225){
 	    yBox = 3;
 	}
-	if (y > 400 && y < 450){
+	if (y > 225 && y < 275){
 	    yBox = 4;
 	}
-	if (y > 450 && y < 500){
+	if (y > 275 && y < 325){
 	    yBox = 5;
 	}
-	if (y > 500 && y < 550){
+	if (y > 325 && y < 375){
 	    yBox = 6;
 	}
-	if (y > 550 && y < 600){
+	if (y > 375 && y < 425){
 	    yBox = 7;
 	}
-	if (y > 600 && y < 650){
+	if (y > 425 && y < 475){
 	    yBox = 8;
 	}
-	System.out.println("( " + x+ ", " + y + ")");
-	System.out.println("XBox: " + xBox);
-	System.out.println("YBox: " + yBox);
+	//System.out.println("( " + x+ ", " + y + ")");
+	//System.out.println("XBox: " + xBox);
+	//System.out.println("YBox: " + yBox);
+	
     }
 
 
@@ -234,28 +428,32 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	int c = 0;
 
 	if (event.equals("new game")){
-	    setContentPane(board);
-	    repaint();
+	    setContentPane(difficulties);
+	    setVisible(true);
+	    // repaint();
 	}
 
 	if (event.equals("old game")){
 	    setContentPane(old);
-	    repaint();
+	    setVisible(true);
 	}
 
 	if (event.equals("settings")){
 	    setContentPane(settings);
-	    repaint();
+	    setVisible(true);
 	}
 
 	if (event.equals("back")){
 	    setContentPane(menu);
-	    repaint();
+	    setVisible(true);
+	    //repaint();
+	    
 	}
 	
 	if (event.equals("reveal")){
-	    SudokuSolver.solveSudoku(initialBoard);
-	    repaint();
+	    setContentPane(solutionPane);
+	    setVisible(true);
+	    //repaint();
 	}
 
 	if (event.equals("check")){
@@ -298,27 +496,50 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	    initialBoard.setNum(yBox, xBox, 9);
 	    grid.repaint();
 	}
-
-	if (event.equals("new game")){
-	    Sudoku a = new Sudoku();
-	    initialBoard = a;
-	    grid.repaint();
-     
+	if (event.equals("supereasy")){
+	    setBoard(new Sudoku(0));
+	    setContentPane(board);
+	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
 	}
+        if (event.equals("easy")){
+	    setBoard(new Sudoku(1));
+	    setContentPane(board);
+	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
+	}
+	if (event.equals("medium")){
+	    setBoard(new Sudoku(2));
+	    setContentPane(this.board);
+	    setVisible(true);
+	    
+	    //System.out.println(initialBoard.getDifficulty());
+	}
+	if (event.equals("hard")){
+	    setBoard(new Sudoku(3));
+	    setContentPane(board);
+	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
+	}
+        if (event.equals("superhard")){
+	    setBoard(new Sudoku (4));
+	    setContentPane(this.board);
+	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
+	}
+        if (event.equals("backtopuzzle")) {
+	    setContentPane(board);
+	    grid.repaint();
+	    setVisible(true);
+	} 
      }
-	
+    
 
 
     public static void main (String[]args){
 	Main a = new Main();
 	a.setVisible(true);
+
     }
 
-
-
-
-
-
 }
-
-
