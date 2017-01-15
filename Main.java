@@ -58,6 +58,12 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     private Grid solutionGrid; 
 
 
+    private Container oldGamePane;
+    private JTextField enterseed;
+    private JButton go = new JButton("Go");;
+    private JButton backtomenupage = new JButton("Back to Menu");
+
+	
     public Main() {
 	this (new Sudoku(2));
     }
@@ -92,6 +98,18 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     }
 
 
+    public void setOldGamePane() {
+	oldGamePane = new Container();
+	oldGamePane.setLayout(new BoxLayout(oldGamePane,BoxLayout.Y_AXIS));
+	go.setMaximumSize(new Dimension(Integer.MAX_VALUE, fourdiff.getMinimumSize().height));
+	go.addActionListener(this);
+	go.setActionCommand("old gaem");
+	oldGamePane.add(go);
+	backtomenu.setMaximumSize(new Dimension(Integer.MAX_VALUE, fourdiff.getMinimumSize().height));
+	
+	oldGamePane.add(enterseed);
+
+    }
     public void setDifficulties() {
 	difficulties.setLayout(new BoxLayout(difficulties,BoxLayout.Y_AXIS));
 	zerodiff.setMaximumSize(new Dimension(Integer.MAX_VALUE, zerodiff.getMinimumSize().height));
@@ -207,6 +225,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	board.add(grid, BorderLayout.CENTER);
 
 
+
 	//Creating the Solution Pane
 
 	solutionPane  = new Container();
@@ -225,7 +244,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	Sudoku a = new Sudoku(initialBoard.getBoard());
 	SudokuSolver.solveSudoku(a);
 	solution = new Sudoku (a.getBoard());
-	System.out.println ("Constructor: " + solution);
+	//System.out.println ("Constructor: " + solution);
 	//System.out.println (solution);
 	solutionGrid = new Grid (solution); 
 	solutionPane.setLayout(new BorderLayout());
@@ -247,8 +266,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     public void mouseExited(MouseEvent e) {
     }
 
-    
-    
+   
     public void mouseClicked(MouseEvent e){
 	/*
 	int x = e.getX();
@@ -372,7 +390,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	}
         if (event.equals("five")){
 	    initialBoard.setNum(yBox, xBox, 5);
-	    grid.repaint();
+ 	    grid.repaint();
 	}
 	if (event.equals("six")){
 	    initialBoard.setNum(yBox, xBox, 6);
@@ -394,32 +412,26 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	    setBoard(new Sudoku(0));
 	    setContentPane(board);
 	    setVisible(true);
-	    //System.out.println(initialBoard.getDifficulty());
 	}
         if (event.equals("easy")){
 	    setBoard(new Sudoku(1));
 	    setContentPane(board);
 	    setVisible(true);
-	    //System.out.println(initialBoard.getDifficulty());
 	}
 	if (event.equals("medium")){
 	    setBoard(new Sudoku(2));
 	    setContentPane(this.board);
 	    setVisible(true);
-	    
-	    //System.out.println(initialBoard.getDifficulty());
 	}
 	if (event.equals("hard")){
 	    setBoard(new Sudoku(3));
 	    setContentPane(board);
 	    setVisible(true);
-	    //System.out.println(initialBoard.getDifficulty());
 	}
         if (event.equals("superhard")){
 	    setBoard(new Sudoku (4));
 	    setContentPane(this.board);
 	    setVisible(true);
-	    //System.out.println(initialBoard.getDifficulty());
 	}
         if (event.equals("backtopuzzle")) {
 	    setContentPane(board);

@@ -39,6 +39,10 @@ public class Sudoku extends JComponent{
 	this (2, showKey); 
     }
 
+    public Sudoku (int diff, long seed) {
+	this (diff, seed, false, false);
+    } 
+
     public Sudoku (int diff, long seed, boolean showKey, boolean temp) {
 	board = new int[9][9];
 	difficulty = diff;
