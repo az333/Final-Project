@@ -44,7 +44,8 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     private JTextField diffLevel = new JTextField(5);
     private JLabel difftext = new JLabel("Enter your difficulty level");
     private JButton submitted = new JButton("Enter");
-    private JButton backtomenupage = new JButton("Back to Menu"); 
+    private JButton backtomenupage = new JButton("Back to Menu");
+    private JLabel j = new JLabel("Please enter only integers");
 
    
     private Container difficulties;
@@ -470,7 +471,6 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 		long seed = Integer.parseInt( seedNum.getText());
 		int diff = Integer.parseInt(diffLevel.getText());
 	    } catch (NumberFormatException error) {
-		JLabel j = new JLabel("Please enter only integers");
 		old.add(j);
 		return;
 	    }
