@@ -40,7 +40,8 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     private Container old;
 
-    private JTextField seedNum = new JTextField(9);
+    private JTextField seedNum = new JTextField("Puzzle #",5);
+    private JTextField level = new JTextField("Difficulty", 5);
     private JButton submitted = new JButton("Display -->");
     
     private Container difficulties;
@@ -79,7 +80,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	setBoard(s);
 	setMenu();
 	setDifficulties();
-	setOldGame(0);
+	setOldGame(0, 0);
 
 
 	addMouseListener(this);
@@ -241,7 +242,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	solutionPane.add(solutionGrid, BorderLayout.CENTER);
     }
 
-    private void setOldGame(int seed){
+    private void setOldGame(int seed, int diff){
 
 	
 	old = new Container();
@@ -252,7 +253,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	
 	//Creating the Game Pane
 
-	initialBoard = new Sudoku(seed);
+	initialBoard = new Sudoku(seed,diff);
 	grid = new Grid(initialBoard);
 	
 	xBox = 9;
@@ -273,9 +274,12 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	submitted.setActionCommand("submitted");
 	menuBar.add(submitted);
 	menuBar.add(seedNum);
+	menuBar.add(level);
 
 	JPanel sideBar = new JPanel();
 	sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
+	seedUnchange = new JLabel ("Seed #" + initialBoard.getSeed() + "\n");
+	sideBar.add(seedUnchange);
 	one.addActionListener(this);
 	one.setActionCommand("one");
 	sideBar.add(one);
@@ -436,6 +440,11 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	if (event.equals("old game")){
 	    setContentPane(old);
 	    setVisible(true);
+	}
+
+	if (event.equals("display")){
+
+
 	}
 
 	if (event.equals("settings")){
