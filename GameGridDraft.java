@@ -2,21 +2,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class GameGrid extends JPanel{ 
+public class GameGrid extends JFrame implements MouseListener, ActionListener{ 
 
     private int xBox;
     private int yBox;
     
     private Sudoku initialBoard;
     private Grid grid;
-
-
+ 
+    
+    private Container content;
     private JButton check = new JButton("Check My Solution");
     private JButton reveal = new JButton("Reveal the Solution");
     private JButton back = new JButton("Back to Menu");
-
-    private Container content;
-
     private JButton one = new JButton("1");
     private JButton two = new JButton("2");
     private JButton three = new JButton("3");
@@ -27,11 +25,8 @@ public class GameGrid extends JPanel{
     private JButton eight = new JButton("8");
     private JButton nine = new JButton("9");
 
-
     private JButton newGame = new JButton("New Game");
     
-
-
 
     
     public GameGrid(){
@@ -44,62 +39,50 @@ public class GameGrid extends JPanel{
 
 	JPanel menuBar = new JPanel();
 	menuBar.setLayout(new FlowLayout());
-
-	//back.addActionListener(this);
+	back.addActionListener(this);
 	back.setActionCommand("back");
 	menuBar.add(back);
-	//check.addActionListener(this);
+	check.addActionListener(this);
 	check.setActionCommand("check");
 	menuBar.add(check);
-	//reveal.addActionListener(this);
+	reveal.addActionListener(this);
 	reveal.setActionCommand("reveal");
 	menuBar.add(reveal);
-
-	
-
-	menuBar.add(check);
-	check.setActionCommand("check");
-	menuBar.add(reveal);
-	reveal.setActionCommand("reveal");
-	//reveal.addActionListener(this);
-
 
 	JPanel sideBar = new JPanel();
 	sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
-	//one.addActionListener(this);
+	one.addActionListener(this);
 	one.setActionCommand("one");
 	sideBar.add(one);
-	//two.addActionListener(this);
+	two.addActionListener(this);
 	two.setActionCommand("two");
 	sideBar.add(two);
-	//three.addActionListener(this);
+	three.addActionListener(this);
 	three.setActionCommand("three");
 	sideBar.add(three);
-	//four.addActionListener(this);
+	four.addActionListener(this);
 	four.setActionCommand("four");
 	sideBar.add(four);
-	//five.addActionListener(this);
+	five.addActionListener(this);
 	five.setActionCommand("five");
 	sideBar.add(five);
-	//six.addActionListener(this);
+	six.addActionListener(this);
 	six.setActionCommand("six");
 	sideBar.add(six);
-	//seven.addActionListener(this);
+	seven.addActionListener(this);
 	seven.setActionCommand("seven");
 	sideBar.add(seven);
-	//eight.addActionListener(this);
+	eight.addActionListener(this);
 	eight.setActionCommand("eight");
 	sideBar.add(eight);
-	//nine.addActionListener(this);
+	nine.addActionListener(this);
 	nine.setActionCommand("nine");
 	sideBar.add(nine);
-
-	//newGame.addActionListener(this);
+	newGame.addActionListener(this);
 	newGame.setActionCommand("new game");
 	sideBar.add(newGame);
-
 	
-	/*
+
 	JPanel content = new JPanel();
 	content.setLayout(new BorderLayout());
         content.add(menuBar, BorderLayout.NORTH);
@@ -112,52 +95,23 @@ public class GameGrid extends JPanel{
 	setResizable(false);
 	pack();
 	setLocationRelativeTo(null);
-	*/
-    }
-
-    public int getXBox(){
-	return xBox;
-    }
-
-    public void setXBox(int n){
-	xBox = n;
-    }
-
-    public int getYBox(){
-	return yBox;
-    }
-
-    public void setYBox(int n){
-	yBox = n;
-    }
-
-    public Sudoku getBoard(){
-	return initialBoard;
-    }
-
-    public void setBoard(Sudoku s){
-	initialBoard = s;
-    }
-    
-
-    public Grid getGrid(){
-	return grid;
-    }
+    }    
 
     
-
-    /* 
     public GameGrid(Sudoku initialBoard){
 	this.initialBoard = initialBoard;
 	this.grid = new Grid(initialBoard);
+
 	JPanel menuBar = new JPanel();
 	menuBar.setLayout(new FlowLayout());
 	menuBar.add(check);
 	menuBar.add(reveal);
+
 	JPanel content = new JPanel();
 	content.setLayout(new BorderLayout());
 	content.add(menuBar, BorderLayout.NORTH);
 	content.add(grid, BorderLayout.CENTER);
+
 	setContentPane(content);
 	setTitle("soDoCa");
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -165,41 +119,32 @@ public class GameGrid extends JPanel{
 	pack();
 	setLocationRelativeTo(null);
      }
-<<<<<<< HEAD
- //Empty method definition. 
-    public void mousePressed(MouseEvent e) {
-    }
-    //Empty method definition. 
-    public void mouseReleased(MouseEvent e) {
-    }
-    //Empty method definition. 
-    public void mouseEntered(MouseEvent e) {
-    }
-=======
 
+    ///I need to add the mouseListener part
 
-
- //Empty method definition. 
+    
+    /*Empty method definition. */
     public void mousePressed(MouseEvent e) {
     }
 
-    //Empty method definition. 
+    /* Empty method definition. */
     public void mouseReleased(MouseEvent e) {
     }
 
-    //Empty method definition. 
+    /* Empty method definition. */
     public void mouseEntered(MouseEvent e) {
     }
 
->>>>>>> Donia
-    //Empty method definition. 
+    /* Empty method definition. */
     public void mouseExited(MouseEvent e) {
     }
     
+    //this is my job for today!
+    
     public void mouseClicked(MouseEvent e){
-	System.out.println("true");
 	if (e.getXOnScreen() < 50){
-	    System.out.println("true");
+	    setBackground(Color.RED);
+	    grid.repaint();
 	    xBox = 0;
 	}
 	if (e.getXOnScreen() < 100){
@@ -253,38 +198,32 @@ public class GameGrid extends JPanel{
 	if (e.getYOnScreen() < 450){
 	    yBox = 8;
 	}
-	for (int i = 1; i * 50 < e.getXOnScreen(); i ++){
+	/*for (int i = 1; i * 50 < e.getXOnScreen(); i ++){
 	    xBox = i - 1;
 	}
 	for (int j = 1; j * 50 < e.getYOnScreen(); j ++){
 	    yBox = j - 1;
 	}
-	
+	*/
     }
-<<<<<<< HEAD
-=======
 
+  
 
-
->>>>>>> Donia
-    
-     public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	int r = 0;
 	int c = 0;
-<<<<<<< HEAD
-=======
-
->>>>>>> Donia
 	if (event.equals("back")){
-	    //smthg
+	    MenuPage m = new MenuPage ();
+	    JPanel menu = (JPanel)m.getContentPane(); 
+	    this.setContentPane(menu);
 	}
 	
 	if (event.equals("reveal")){
-	    System.out.println("true");
 	    SudokuSolver.solveSudoku(initialBoard);
 	    grid.repaint();
 	}
+
 	if (event.equals("check")){
 	     //smthg
 	}	
@@ -321,32 +260,38 @@ public class GameGrid extends JPanel{
 	    initialBoard.setNum(xBox, yBox, 8);
 	    grid.repaint();
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> Donia
 	if (event.equals("nine")){
 	    initialBoard.setNum(xBox, yBox, 9);
 	    grid.repaint();
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> Donia
 	if (event.equals("new game")){
-	    Sudoku a = new Sudoku();
-	    initialBoard = a;
-	    grid.repaint();
+	    //System.out.println("true");
+	    GameGrid a = new GameGrid();
+	    a.setVisible(true);
+	    // this.setContentPane(a.getContentPane());
+	    
 	}
-	
-	       
+		
     }
-    
+
+     
     public static void main (String[]args){
 	GameGrid b = new GameGrid();
 	b.setVisible(true);
     }
-    */
-	
     
 }
+    
+	    
+    
+
+
+
+
+
+
+
+
+
+

@@ -19,7 +19,7 @@ public class Grid extends JComponent {
     
 
     public Grid(Sudoku initialBoard) {
-        setPreferredSize(new Dimension(boardPixels + 2, boardPixels + 2));
+        setPreferredSize(new Dimension(boardPixels + 5, boardPixels + 5));
         setBackground(Color.WHITE);
         this.initialBoard = initialBoard;
     }
@@ -46,6 +46,11 @@ public class Grid extends JComponent {
                 g.drawLine(0, acrossOrDown, boardPixels, acrossOrDown);
             }
         }
+    }
+
+    public void setFontColor(Font f){
+	textFont = f;
+
     }
     
     private void drawCellValues(Graphics g) {

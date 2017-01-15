@@ -16,12 +16,13 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     private Sudoku initialBoard;
     private Grid grid;
+    private JLabel seedUnchange;
     
     private int xBox;
     private int yBox;
 
-    private JButton check = new JButton("Check My Solution");
-    private JButton reveal = new JButton("Reveal the Solution");
+    private JButton check = new JButton("Check");
+    private JButton reveal = new JButton("Reveal");
     private JButton back = new JButton("Back to Menu");
     private JButton newfromgrid = new JButton("New Game");
 
@@ -38,7 +39,12 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     
 
     private Container old;
+    private JTextField seedNum = new JTextField("Enter your puzzle number");
+    private JTextField diffLevel = new JTextField("Enter your difficulty level");
+    private JButton submitted = new JButton("Enter");
+    private JButton backtomenupage = new JButton("Back to Menu"); 
 
+   
     private Container difficulties;
     private JButton zerodiff= new JButton("Super Easy");
     private JButton onediff = new JButton("Easy");
@@ -58,12 +64,6 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     private Grid solutionGrid; 
 
 
-    private Container oldGamePane;
-    private JTextField enterseed;
-    private JButton go = new JButton("Go");;
-    private JButton backtomenupage = new JButton("Back to Menu");
-
-	
     public Main() {
 	this (new Sudoku(2));
     }
@@ -87,7 +87,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
 	//Setting up the Pane 
 	setTitle("soDoCa");
-	setSize(620,500);
+	setSize(600,520);
 	setLocation(100,100);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setResizable(false);
@@ -98,18 +98,6 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     }
 
 
-    public void setOldGamePane() {
-	oldGamePane = new Container();
-	oldGamePane.setLayout(new BoxLayout(oldGamePane,BoxLayout.Y_AXIS));
-	go.setMaximumSize(new Dimension(Integer.MAX_VALUE, fourdiff.getMinimumSize().height));
-	go.addActionListener(this);
-	go.setActionCommand("old gaem");
-	oldGamePane.add(go);
-	backtomenu.setMaximumSize(new Dimension(Integer.MAX_VALUE, fourdiff.getMinimumSize().height));
-	
-	oldGamePane.add(enterseed);
-
-    }
     public void setDifficulties() {
 	difficulties.setLayout(new BoxLayout(difficulties,BoxLayout.Y_AXIS));
 	zerodiff.setMaximumSize(new Dimension(Integer.MAX_VALUE, zerodiff.getMinimumSize().height));
@@ -170,6 +158,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
 	initialBoard = s;
 	grid = new Grid (initialBoard);
+	
         		
 	xBox = 9;
 	yBox = 9;
@@ -188,6 +177,8 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
 	JPanel sideBar = new JPanel();
 	sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
+	seedUnchange = new JLabel ("Seed #" + initialBoard.getSeed() + "\n");
+	sideBar.add(seedUnchange);
 	one.addActionListener(this);
 	one.setActionCommand("one");
 	sideBar.add(one);
@@ -225,7 +216,6 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	board.add(grid, BorderLayout.CENTER);
 
 
-
 	//Creating the Solution Pane
 
 	solutionPane  = new Container();
@@ -250,7 +240,31 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	solutionPane.setLayout(new BorderLayout());
 	solutionPane.add(solutionMenu, BorderLayout.SOUTH);
 	solutionPane.add(solutionGrid, BorderLayout.CENTER);
-    } 
+    }
+
+    private void setOldGame(){
+
+	
+	old = new Container();
+
+	old.setLayout(new BoxLayout(old,BoxLayout.Y_AXIS));
+	submitted.setMaximumSize(new Dimension(Integer.MAX_VALUE, submitted.getMinimumSize().height));
+	submitted.addActionListener(this);
+	submitted.setActionCommand("goToOldGame");
+	old.add(submitted);
+
+	
+	backtomenupage.setMaximumSize(new Dimension(Integer.MAX_VALUE, backtomenupage.getMinimumSize().height));
+	backtomenupage.addActionListener(this);
+	backtomenupage.setActionCommand("back");
+	old.add(backtomenupage);
+
+	old.add(diffLevel);
+	old.add(seedNum);
+	
+    }
+
+    
     //Empty method definition. 
      public void mousePressed(MouseEvent e) {
     }
@@ -266,71 +280,70 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     public void mouseExited(MouseEvent e) {
     }
 
-   
+    
+    
     public void mouseClicked(MouseEvent e){
-	/*
 	int x = e.getX();
 	int y = e.getY();
 	//System.out.println("true");
-	if (x > 330 && x < 380){
+	if (x > 0 && x < 50){
 	    xBox = 0;
 	}
-	if (x > 380 && x < 430){
+	if (x > 50 && x < 100){
 	    xBox = 1;
 	}
-	if (x > 430 && x < 480){
+	if (x > 100 && x < 150){
 	    xBox = 2;
 	}
-	if (x > 480 && x < 530){
+	if (x > 150 && x < 200){
 	    xBox = 3;
 	}
-	if (x > 530 && x < 580){
+	if (x > 200 && x < 250){
 	    xBox = 4;
 	}
-	if (x > 580 && x < 630){
+	if (x > 250 && x < 300){
 	    xBox = 5;
 	}
-	if (x > 630 && x < 680){
+	if (x > 300 && x < 350){
 	    xBox = 6;
 	}
-	if (x > 680 && x < 730){
+	if (x > 350 && x < 400){
 	    xBox = 7;
 	}
-	if (x > 730 && x < 780){
+	if (x > 400 && x < 450){
 	    xBox = 8;
 	}
-	if (y > 200 && y < 250){
+	if (y > 25 && y < 75){
 	    yBox = 0;
 	}
-	if (y > 250 && y < 300){
+	if (y > 75 && y < 125){
 	    yBox = 1;
 	}
-	if (y > 300 && y < 350){
+	if (y > 125 && y < 175){
 	    yBox = 2;
 	}
-	if (y > 350 && y < 400){
+	if (y > 175 && y < 225){
 	    yBox = 3;
 	}
-	if (y > 400 && y < 450){
+	if (y > 225 && y < 275){
 	    yBox = 4;
 	}
-	if (y > 450 && y < 500){
+	if (y > 275 && y < 325){
 	    yBox = 5;
 	}
-	if (y > 500 && y < 550){
+	if (y > 325 && y < 375){
 	    yBox = 6;
 	}
-	if (y > 550 && y < 600){
+	if (y > 375 && y < 425){
 	    yBox = 7;
 	}
-	if (y > 600 && y < 650){
+	if (y > 425 && y < 475){
 	    yBox = 8;
 	}
-	System.out.println("( " + x+ ", " + y + ")");
-	System.out.println("XBox: " + xBox);
-	System.out.println("YBox: " + yBox);
-
-	*/
+	//System.out.println("( " + x+ ", " + y + ")");
+	//System.out.println("XBox: " + xBox);
+	//System.out.println("YBox: " + yBox);
+	
     }
 
 
@@ -346,13 +359,14 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	}
 
 	if (event.equals("old game")){
+	    setOldGame();
 	    setContentPane(old);
-	    repaint();
+	    setVisible(true);
 	}
 
 	if (event.equals("settings")){
 	    setContentPane(settings);
-	    repaint();
+	    setVisible(true);
 	}
 
 	if (event.equals("back")){
@@ -390,7 +404,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	}
         if (event.equals("five")){
 	    initialBoard.setNum(yBox, xBox, 5);
- 	    grid.repaint();
+	    grid.repaint();
 	}
 	if (event.equals("six")){
 	    initialBoard.setNum(yBox, xBox, 6);
@@ -412,32 +426,46 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	    setBoard(new Sudoku(0));
 	    setContentPane(board);
 	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
 	}
         if (event.equals("easy")){
 	    setBoard(new Sudoku(1));
 	    setContentPane(board);
 	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
 	}
 	if (event.equals("medium")){
 	    setBoard(new Sudoku(2));
 	    setContentPane(this.board);
 	    setVisible(true);
+	    
+	    //System.out.println(initialBoard.getDifficulty());
 	}
 	if (event.equals("hard")){
 	    setBoard(new Sudoku(3));
 	    setContentPane(board);
 	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
 	}
         if (event.equals("superhard")){
 	    setBoard(new Sudoku (4));
 	    setContentPane(this.board);
 	    setVisible(true);
+	    //System.out.println(initialBoard.getDifficulty());
 	}
         if (event.equals("backtopuzzle")) {
 	    setContentPane(board);
 	    grid.repaint();
 	    setVisible(true);
-	} 
+	}
+	if (event.equals("goToOldGame")) {
+	    long seed = Integer.parseInt( seedNum.getText());
+	    int diff = Integer.parseInt(diffLevel.getText());
+	    Sudoku s = new Sudoku (diff, seed);
+	    setBoard(s);
+	    setContentPane(board);
+	    setVisible(true);
+	}
      }
     
 

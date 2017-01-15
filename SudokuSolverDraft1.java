@@ -149,7 +149,6 @@ public class SudokuSolver  {
     }
 
     public static void main (String[] args) {
-
 	/*
 	Sudoku ra = new Sudoku();
 	int[][] r = ra.getBoard();
@@ -174,9 +173,7 @@ public class SudokuSolver  {
  	System.out.println (ra);
  	solveSudoku(ra);
  	System.out.println (ra); */
-
     }
 
 }
     
-

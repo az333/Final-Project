@@ -1,8 +1,16 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> Donia
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+<<<<<<< HEAD
 public class MenuPage extends JFrame implements ActionListener{
+=======
+public class MenuPage extends JPanel{
+>>>>>>> Donia
  private Container pane;
  private JButton newGame;
  private JButton oldGame;
@@ -29,6 +37,7 @@ public class MenuPage extends JFrame implements ActionListener{
      pane.add(oldGame);
      pane.add(settings);
   }
+<<<<<<< HEAD
     public void actionPerformed(ActionEvent e){
 	String event = e.getActionCommand();
 	if (event.equals("new")){
@@ -43,12 +52,21 @@ public class MenuPage extends JFrame implements ActionListener{
     }
 	    
 
+=======
+	    
+    /*
+>>>>>>> Donia
   //MAIN JUST INSTANTIATES + MAKE VISIBLE
   public static void main(String[] args) {
      MenuPage g = new MenuPage();
      g.setVisible(true);
   }
+<<<<<<< HEAD
 }
 
 
     
+=======
+    */
+}
+>>>>>>> Donia
