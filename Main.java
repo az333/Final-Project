@@ -39,8 +39,10 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     
 
     private Container old;
-    private JTextField seedNum = new JTextField("Enter your puzzle number");
-    private JTextField diffLevel = new JTextField("Enter your difficulty level");
+    private JTextField seedNum = new JTextField(5);
+    private JLabel seedtext = new JLabel("Enter your puzzle number"); 
+    private JTextField diffLevel = new JTextField(5);
+    private JLabel difftext = new JLabel("Enter your difficulty level");
     private JButton submitted = new JButton("Enter");
     private JButton backtomenupage = new JButton("Back to Menu"); 
 
@@ -247,20 +249,25 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	
 	old = new Container();
 
+	diffLevel.setMaximumSize(new Dimension(Integer.MAX_VALUE, submitted.getMinimumSize().height));
+	seedNum.setMaximumSize(new Dimension(Integer.MAX_VALUE, submitted.getMinimumSize().height));
+
+	old.add(seedtext); 
+	old.add(seedNum);
+	old.add(difftext); 
+	old.add(diffLevel);
+
 	old.setLayout(new BoxLayout(old,BoxLayout.Y_AXIS));
 	submitted.setMaximumSize(new Dimension(Integer.MAX_VALUE, submitted.getMinimumSize().height));
 	submitted.addActionListener(this);
 	submitted.setActionCommand("goToOldGame");
 	old.add(submitted);
 
-	
 	backtomenupage.setMaximumSize(new Dimension(Integer.MAX_VALUE, backtomenupage.getMinimumSize().height));
 	backtomenupage.addActionListener(this);
 	backtomenupage.setActionCommand("back");
 	old.add(backtomenupage);
 
-	old.add(diffLevel);
-	old.add(seedNum);
 	
     }
 
@@ -459,8 +466,16 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	    setVisible(true);
 	}
 	if (event.equals("goToOldGame")) {
-	    long seed = Integer.parseInt( seedNum.getText());
-	    int diff = Integer.parseInt(diffLevel.getText());
+	    try {
+		long seed = Integer.parseInt( seedNum.getText());
+		int diff = Integer.parseInt(diffLevel.getText());
+	    } catch (NumberFormatException error) {
+		JLabel j = new JLabel("Please enter only integers");
+		old.add(j);
+		return;
+	    }
+	    	long seed = Integer.parseInt( seedNum.getText());
+		int diff = Integer.parseInt(diffLevel.getText());
 	    Sudoku s = new Sudoku (diff, seed);
 	    setBoard(s);
 	    setContentPane(board);
