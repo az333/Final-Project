@@ -65,7 +65,6 @@ public class Grid extends JComponent {
 		
 		if (initialBoard.ogNum(i,j) == 10){
 		    g.setFont(new Font ("Sansserif", Font.PLAIN, 24));
-		    g.setColor(Color.PINK);
 		    if (solved.getNum(i,j) != initialBoard.getNum(i,j) && initialBoard.getCheck()){
 			g.setColor(Color.RED);
 			g.setFont(textFont);
@@ -93,6 +92,7 @@ public class Grid extends JComponent {
 			g.setColor(Color.BLACK);
 		    }
 		    */
+		    
 		}
 		if (initialBoard.ogNum(i,j) != 10){
 		    g.setFont(textFont);

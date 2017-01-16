@@ -247,8 +247,6 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	Sudoku a = new Sudoku(initialBoard.getBoard());
 	SudokuSolver.solveSudoku(a);
 	solution = new Sudoku (a.getBoard());
-	//System.out.println ("Constructor: " + solution);
-	//System.out.println (solution);
 	solutionGrid = new Grid (solution); 
 	solutionPane.setLayout(new BorderLayout());
 	solutionPane.add(solutionMenu, BorderLayout.SOUTH);
@@ -284,20 +282,15 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     public void setSettings(){
 
-	//settingsPane = new Container();
 	settingsPane.setLayout(new BoxLayout(settingsPane, BoxLayout.Y_AXIS));
 	    
 	settingsPane.add(c);
-	//colors.setVisible(true);
 	settingsPane.add(colors);
         submitColor.addActionListener(this);
 	submitColor.setActionCommand("color submitted");
 	settingsPane.add(submitColor);
 	settingsPane.add(back);
 	settingsPane.add(newpuzzle);
-
-
-
 
     }
 
@@ -425,8 +418,9 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	if (event.equals("color submitted")){
 	    String color = colors.getSelectedItem().toString();
 	    initialBoard.setColor(color);
-	    //System.out.println(color);
-	    //System.out.println(initialBoard.getColor());
+	    System.out.println(color);
+	    System.out.println(initialBoard.getColor());
+	    System.out.println(initialBoard.getColor() == "Orange");
 	}
 	
 	if (event.equals("one")){
