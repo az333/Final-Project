@@ -60,7 +60,7 @@ public class Grid extends JComponent {
             for (int j = 0; j < puzzleSize; j++) {
 		if (initialBoard.ogNum(i,j) == 10){
 		    g.setFont(new Font ("Sansserif", Font.PLAIN, 24));
-		    if (initialBoard.getColor() == "Red"){
+		    /*if (initialBoard.getColor() == "Red"){
 			g.setColor(Color.RED);
 		    }
 		    if (initialBoard.getColor() == "Orange"){
@@ -84,6 +84,7 @@ public class Grid extends JComponent {
 		    if (initialBoard.getColor() == "Black"){
 			g.setColor(Color.BLACK);
 		    }
+		    */
 		}
 		if (initialBoard.ogNum(i,j) != 10){
 		    g.setFont(textFont);
