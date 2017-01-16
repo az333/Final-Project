@@ -39,11 +39,15 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     
 
     private Container old;
+    private JTextField seedNum = new JTextField(5);
+    private JLabel seedtext = new JLabel("Enter your puzzle number"); 
+    private JTextField diffLevel = new JTextField(5);
+    private JLabel difftext = new JLabel("Enter your difficulty level");
+    private JButton submitted = new JButton("Enter");
+    private JButton backtomenupage = new JButton("Back to Menu");
+    private JLabel j = new JLabel("Please enter only integers");
 
-    private JTextField seedNum = new JTextField("Puzzle #",5);
-    private JTextField level = new JTextField("Difficulty", 5);
-    private JButton submitted = new JButton("Display -->");
-    
+   
     private Container difficulties;
     private JButton zerodiff= new JButton("Super Easy");
     private JButton onediff = new JButton("Easy");
@@ -53,6 +57,10 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     
 
     private Container settingsPane;
+    private JLabel c = new JLabel("Pick a Pen Color:");
+    String[] colorChoices = { "Red", "Orange", "Pink", "Green", "Blue", "Magenta", "Dark Gray", "Black" };
+    private JComboBox<String> colors = new JComboBox<String>(colorChoices);
+    private JButton submitColor = new JButton("Submit Color Choice");
     
 
     private Container solutionPane;
@@ -68,6 +76,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     }
     
     public Main(Sudoku s){
+	
 
         menu = new Container();
 	//board = new Container();
@@ -80,7 +89,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	setBoard(s);
 	setMenu();
 	setDifficulties();
-	setOldGame(0, 0);
+	setSettings();
 
 
 	addMouseListener(this);
@@ -242,105 +251,50 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	solutionPane.add(solutionGrid, BorderLayout.CENTER);
     }
 
-    private void setOldGame(int seed, int diff){
+    private void setOldGame(){
 
 	
 	old = new Container();
-	old.setLayout(new BorderLayout());
-        
-	//grid.addMouseListener(this);
-	addMouseListener(this);
-	
-	//Creating the Game Pane
 
-	initialBoard = new Sudoku(seed,diff);
-	grid = new Grid(initialBoard);
-	
-	xBox = 9;
-	yBox = 9;
-	
-	JPanel menuBar = new JPanel();
-	menuBar.setLayout(new FlowLayout());
-	back.addActionListener(this);
-	back.setActionCommand("back");
-	menuBar.add(back);
-	check.addActionListener(this);
-	check.setActionCommand("check");
-	menuBar.add(check);
-	reveal.addActionListener(this);
-	reveal.setActionCommand("reveal");
-	menuBar.add(reveal);
+	diffLevel.setMaximumSize(new Dimension(Integer.MAX_VALUE, submitted.getMinimumSize().height));
+	seedNum.setMaximumSize(new Dimension(Integer.MAX_VALUE, submitted.getMinimumSize().height));
+
+	old.add(seedtext); 
+	old.add(seedNum);
+	old.add(difftext); 
+	old.add(diffLevel);
+
+	old.setLayout(new BoxLayout(old,BoxLayout.Y_AXIS));
+	submitted.setMaximumSize(new Dimension(Integer.MAX_VALUE, submitted.getMinimumSize().height));
 	submitted.addActionListener(this);
-	submitted.setActionCommand("submitted");
-	menuBar.add(submitted);
-	menuBar.add(seedNum);
-	menuBar.add(level);
+	submitted.setActionCommand("goToOldGame");
+	old.add(submitted);
 
-	JPanel sideBar = new JPanel();
-	sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
-	seedUnchange = new JLabel ("Seed #" + initialBoard.getSeed() + "\n");
-	sideBar.add(seedUnchange);
-	one.addActionListener(this);
-	one.setActionCommand("one");
-	sideBar.add(one);
-	two.addActionListener(this);
-	two.setActionCommand("two");
-	sideBar.add(two);
-	three.addActionListener(this);
-	three.setActionCommand("three");
-	sideBar.add(three);
-	four.addActionListener(this);
-	four.setActionCommand("four");
-	sideBar.add(four);
-	five.addActionListener(this);
-	five.setActionCommand("five");
-	sideBar.add(five);
-	six.addActionListener(this);
-	six.setActionCommand("six");
-	sideBar.add(six);
-	seven.addActionListener(this);
-	seven.setActionCommand("seven");
-	sideBar.add(seven);
-	eight.addActionListener(this);
-	eight.setActionCommand("eight");
-	sideBar.add(eight);
-	nine.addActionListener(this);
-	nine.setActionCommand("nine");
-	sideBar.add(nine);
-	newfromgrid.addActionListener(this);
-	newfromgrid.setActionCommand("new game");
-	sideBar.add(newfromgrid);
-	//board.add(grid, BorderLayout.CENTER);
-        		
-	old.add(menuBar, BorderLayout.SOUTH);
-	old.add(sideBar, BorderLayout.LINE_END);
-	old.add(grid, BorderLayout.CENTER);
+	backtomenupage.setMaximumSize(new Dimension(Integer.MAX_VALUE, backtomenupage.getMinimumSize().height));
+	backtomenupage.addActionListener(this);
+	backtomenupage.setActionCommand("back");
+	old.add(backtomenupage);
+
+    }
 
 
-	//Creating the Solution Pane
+    public void setSettings(){
 
-	solutionPane  = new Container();
+	//settingsPane = new Container();
+	settingsPane.setLayout(new BoxLayout(settingsPane, BoxLayout.Y_AXIS));
+	    
+	settingsPane.add(c);
+	//colors.setVisible(true);
+	settingsPane.add(colors);
+        submitColor.addActionListener(this);
+	submitColor.setActionCommand("color submitted");
+	settingsPane.add(submitColor);
+	settingsPane.add(back);
+	settingsPane.add(newpuzzle);
 
-	JPanel solutionMenu = new JPanel();
-	solutionMenu.setLayout(new FlowLayout());
-	backtomenu.addActionListener(this);
-	backtomenu.setActionCommand("back");
-	solutionMenu.add(backtomenu);
-	newpuzzle.addActionListener(this);
-	newpuzzle.setActionCommand("new game");
-	solutionMenu.add(newpuzzle);
-	backtopuzzle.addActionListener(this);
-	backtopuzzle.setActionCommand("backtopuzzle");
-	solutionMenu.add(backtopuzzle);
-	Sudoku a = new Sudoku(initialBoard.getBoard());
-	SudokuSolver.solveSudoku(a);
-	solution = new Sudoku (a.getBoard());
-	//System.out.println ("Constructor: " + solution);
-	//System.out.println (solution);
-	solutionGrid = new Grid (solution); 
-	solutionPane.setLayout(new BorderLayout());
-	solutionPane.add(solutionMenu, BorderLayout.SOUTH);
-	solutionPane.add(solutionGrid, BorderLayout.CENTER);
+
+
+
     }
 
     
@@ -430,44 +384,44 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	String event = e.getActionCommand();
 	int r = 0;
 	int c = 0;
-
 	if (event.equals("new game")){
 	    setContentPane(difficulties);
 	    setVisible(true);
-	    // repaint();
 	}
 
 	if (event.equals("old game")){
+	    setOldGame();
 	    setContentPane(old);
 	    setVisible(true);
 	}
 
-	if (event.equals("display")){
-
-
-	}
-
 	if (event.equals("settings")){
-	    setContentPane(settings);
+	    setContentPane(settingsPane);
 	    setVisible(true);
 	}
 
 	if (event.equals("back")){
 	    setContentPane(menu);
 	    setVisible(true);
-	    //repaint();
 	    
 	}
 	
 	if (event.equals("reveal")){
 	    setContentPane(solutionPane);
 	    setVisible(true);
-	    //repaint();
 	}
 
 	if (event.equals("check")){
 	     //smthg
-	}	
+	}
+
+	
+	if (event.equals("color submitted")){
+	    String color = colors.getSelectedItem().toString();
+	    initialBoard.setColor(color);
+	    System.out.println(color);
+	    System.out.println(initialBoard.getColor());
+	}
 	
 	if (event.equals("one")){
 	    initialBoard.setNum(yBox, xBox, 1);
@@ -540,7 +494,22 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	    setContentPane(board);
 	    grid.repaint();
 	    setVisible(true);
-	} 
+	}
+	if (event.equals("goToOldGame")) {
+	    try {
+		long seed = Integer.parseInt( seedNum.getText());
+		int diff = Integer.parseInt(diffLevel.getText());
+	    } catch (NumberFormatException error) {
+		old.add(j);
+		return;
+	    }
+	    	long seed = Integer.parseInt( seedNum.getText());
+		int diff = Integer.parseInt(diffLevel.getText());
+	    Sudoku s = new Sudoku (diff, seed);
+	    setBoard(s);
+	    setContentPane(board);
+	    setVisible(true);
+	}
      }
     
 
