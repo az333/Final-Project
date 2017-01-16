@@ -15,12 +15,16 @@ public class Grid extends JComponent {
 
 
     private Sudoku initialBoard;
+    private Sudoku solved;
     
 
     public Grid(Sudoku initialBoard) {
         setPreferredSize(new Dimension(boardPixels + 5, boardPixels + 5));
         setBackground(Color.WHITE);
         this.initialBoard = initialBoard;
+	solved = new Sudoku(initialBoard.getBoard());
+	SudokuSolver.solveSudoku(solved);
+	
 
     }
     
@@ -58,11 +62,15 @@ public class Grid extends JComponent {
         for (int i = 0; i < puzzleSize; i++) {
             int yDisplacement = (i+1) * boxPixels - textOffset;
             for (int j = 0; j < puzzleSize; j++) {
+		
 		if (initialBoard.ogNum(i,j) == 10){
 		    g.setFont(new Font ("Sansserif", Font.PLAIN, 24));
-		    /*if (initialBoard.getColor() == "Red"){
+		    g.setColor(Color.PINK);
+		    if (solved.getNum(i,j) != initialBoard.getNum(i,j) && initialBoard.getCheck()){
 			g.setColor(Color.RED);
+			g.setFont(textFont);
 		    }
+		    /*
 		    if (initialBoard.getColor() == "Orange"){
 			g.setColor(Color.ORANGE);
 		    }

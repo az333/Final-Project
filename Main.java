@@ -35,6 +35,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     private JButton seven = new JButton("7");
     private JButton eight = new JButton("8");
     private JButton nine = new JButton("9");
+    private JButton erase = new JButton("Erase");
 
     
 
@@ -58,7 +59,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     private Container settingsPane;
     private JLabel c = new JLabel("Pick a Pen Color:");
-    String[] colorChoices = { "Red", "Orange", "Pink", "Green", "Blue", "Magenta", "Dark Gray", "Black" };
+    String[] colorChoices = {"Orange", "Pink", "Green", "Blue", "Magenta", "Dark Gray", "Black" };
     private JComboBox<String> colors = new JComboBox<String>(colorChoices);
     private JButton submitColor = new JButton("Submit Color Choice");
     
@@ -215,6 +216,9 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	nine.addActionListener(this);
 	nine.setActionCommand("nine");
 	sideBar.add(nine);
+	erase.addActionListener(this);
+	erase.setActionCommand("erase");
+	sideBar.add(erase);
 	newfromgrid.addActionListener(this);
 	newfromgrid.setActionCommand("new game");
 	sideBar.add(newfromgrid);
@@ -412,15 +416,17 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	}
 
 	if (event.equals("check")){
-	     //smthg
+	    initialBoard.setCheck(true);
+	    grid.repaint();
+	    System.out.println(initialBoard.getCheck());
 	}
 
 	
 	if (event.equals("color submitted")){
 	    String color = colors.getSelectedItem().toString();
 	    initialBoard.setColor(color);
-	    System.out.println(color);
-	    System.out.println(initialBoard.getColor());
+	    //System.out.println(color);
+	    //System.out.println(initialBoard.getColor());
 	}
 	
 	if (event.equals("one")){
@@ -459,6 +465,12 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	    initialBoard.setNum(yBox, xBox, 9);
 	    grid.repaint();
 	}
+
+	if (event.equals("erase")){
+	    initialBoard.setNum(yBox, xBox, 10);
+	    grid.repaint();
+	}
+	
 	if (event.equals("supereasy")){
 	    setBoard(new Sudoku(0));
 	    setContentPane(board);

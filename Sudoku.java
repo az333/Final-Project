@@ -5,9 +5,11 @@ import java.awt.*;
 import java.awt.event.*;
 //import java.math.BigInteger;
 
-public class Sudoku extends JComponent{ 
+public class Sudoku extends JComponent{
+    private String color; 
     private int[][] board;
     private int[][] og;
+    boolean check;
     private Random randgen;
     private long seed; 
     private int difficulty; //0 -  4 (super easy - super hard)
@@ -27,6 +29,8 @@ public class Sudoku extends JComponent{
 		og[i][j] = board[i][j];
 	    }
 	}
+	color = "Black";
+	check = false;
     }
 
     public Sudoku (int[][] gameboard, boolean temp) {
@@ -34,6 +38,8 @@ public class Sudoku extends JComponent{
 	this.setBoard(gameboard);
         og = new int[9][9];
 	og = gameboard;
+	color = "Black";
+	check = false;
     } 
 
 
@@ -71,7 +77,8 @@ public class Sudoku extends JComponent{
 		og[i][j] = board[i][j];
 	    }
 	}
-	
+	color = "Black";
+	check = false;
 	}
 
 	
@@ -92,12 +99,28 @@ public class Sudoku extends JComponent{
 	board[r][c] = x;
     }
 
+    public void setCheck(boolean x){
+	check = x;
+    }
+
+    public boolean getCheck(){
+	return check;
+    }
+
     public int getSeed(){
 	return (int) this.seed;
     }
     
     public int ogNum(int r, int c){
 	return og[r][c];
+    }
+
+    public String getColor(){
+	return color;
+    }
+
+    public void setColor(String c){
+	color = c;
     }
 
     public int[][] getOG(){ return og; }
