@@ -42,7 +42,14 @@ public class Sudoku extends JComponent{
 
     public Sudoku (int diff, long seed) {
 	this (diff, seed, false, false);
-    } 
+    }
+
+    public Sudoku (String empty) {
+	board = new int[9][9];
+	if (empty.equals("empty")) {
+	    clear();
+	}
+    }
 
 
     public Sudoku (int diff, long seed, boolean showKey, boolean temp) {
