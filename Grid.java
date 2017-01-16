@@ -14,13 +14,14 @@ public class Grid extends JComponent {
 
 
 
-    private Sudoku initialBoard;    
+    private Sudoku initialBoard;
     
 
     public Grid(Sudoku initialBoard) {
         setPreferredSize(new Dimension(boardPixels + 5, boardPixels + 5));
         setBackground(Color.WHITE);
         this.initialBoard = initialBoard;
+
     }
     
 
@@ -53,16 +54,23 @@ public class Grid extends JComponent {
     }
     
     private void drawCellValues(Graphics g) {
-	//this inputs the values into the boxes of the grid by going through the array and putting them in the right box
         g.setFont(textFont);
         for (int i = 0; i < puzzleSize; i++) {
             int yDisplacement = (i+1) * boxPixels - textOffset;
             for (int j = 0; j < puzzleSize; j++) {
+		if (initialBoard.ogNum(i,j) == 10){
+		    g.setFont(new Font ("Sansserif", Font.PLAIN, 24));
+		    g.setColor(Color.BLUE);
+		}
+		if (initialBoard.ogNum(i,j) != 10){
+		    g.setFont(textFont);
+		    g.setColor(Color.BLACK);
+		}
                 if (initialBoard.getNum(i, j) > 0 && initialBoard.getNum(i, j) < 10) {
                     int xDisplacement = j * boxPixels + textOffset;
                     g.drawString("" + initialBoard.getNum(i,j), xDisplacement, yDisplacement);
 		}
-		else{//this makes the box empty if the number in the array is 10
+		else{
 		    int xDisplacement = j * boxPixels + textOffset;
 		    g.drawString("", xDisplacement, yDisplacement);
 		}

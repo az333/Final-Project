@@ -7,6 +7,7 @@ import java.awt.event.*;
 
 public class Sudoku extends JComponent{ 
     private int[][] board;
+    private int[][] og;
     private Random randgen;
     private long seed; 
     private int difficulty; //0 -  4 (super easy - super hard)
@@ -20,11 +21,19 @@ public class Sudoku extends JComponent{
     public Sudoku (int[][] gameboard) {
 	this ();
         this.setBoard(gameboard);
+	og = new int[9][9];
+        for (int i = 0; i < 9; i ++){
+	    for (int j = 0; j < 9; j ++){
+		og[i][j] = board[i][j];
+	    }
+	}
     }
 
     public Sudoku (int[][] gameboard, boolean temp) {
 	this (2 ,(long)(Math.random()* 999999999), false, temp);
 	this.setBoard(gameboard);
+        og = new int[9][9];
+	og = gameboard;
     } 
 
 
@@ -55,7 +64,14 @@ public class Sudoku extends JComponent{
 	    if (!showKey) {
 		this.removeMultiple();
 	    }
-	    }	
+	}
+	og = new int[9][9];
+	for (int i = 0; i < 9; i ++){
+	    for (int j = 0; j < 9; j ++){
+		og[i][j] = board[i][j];
+	    }
+	}
+	
 	}
 
 	
@@ -80,7 +96,11 @@ public class Sudoku extends JComponent{
 	return (int) this.seed;
     }
     
-    
+    public int ogNum(int r, int c){
+	return og[r][c];
+    }
+
+    public int[][] getOG(){ return og; }
 
     public int[][] getBoard() { return board; }
 
