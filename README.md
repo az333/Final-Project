@@ -13,7 +13,7 @@ Our project is a Sudoku Player. It allows the user to play games, play games the
 •	The user can input numbers into the grid with mouse and action listeners. 
 •	There are functions to check the current inputted numbers if the user hasn't finished the entire puzzle, and a reveal option if the user chooses to give up. 
 •	If there is a mistake in the user's incomplete grid, they can erase a certain box. 
-•	The numbers of the initial puzzle are in a bold font and the user's font is in plain so that a difference is noticeable. 
+•	The numbers of the initial puzzle are in a bold font and the user's font is in plain so that a difference is noticeable.
 •	If the user chooses, they can input the seed number (puzzle #) and puzzle difficulty into the old game section, and the same puzzle will display for the user to play (following the same rules for playing a new game and with the same functions). 
 •	The user can also input a puzzle for the program to solve. They enter the numbers of their puzzle into the grid in the same way that they would if they were playing a game, and click solve for the program to complete the puzzle.
 •	The solver will notify the user if the inputted puzzle does not have any solution. 
