@@ -68,7 +68,7 @@ public class Sudoku extends JComponent{
 
 	
     //Set all values on the board to 10
-    private void clear(){		
+    public void clear(){		
 	for (int row = 0; row < board.length; row ++) {
 	    for ( int column = 0; column < board[row].length; column ++) {
 		board[row][column] = 10;
@@ -279,12 +279,7 @@ public class Sudoku extends JComponent{
     }
 
     public static void main (String[] args) {
-	Sudoku a = new Sudoku (0);
-
-	//System.out.println (a);
-	//SudokuSolver.solveSudoku (a); 
-	//a.removeMultiple();
-	//System.out.println (a); 
+ 
 	//	SudokuSolver.solveSudoku(a);
 	//System.out.println (a);
 	//System.out.println (SudokuSolver.validSums(a));

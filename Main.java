@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
+import java.util.*; //random, scanner, arrayli
 
 public class Main extends JFrame implements MouseListener, ActionListener{
 
@@ -15,6 +15,8 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     private Container board;
 
+    private JButton clear = new JButton("Clear Board"); 
+    private JLabel textArea = new JLabel(); 
     private Sudoku initialBoard;
     private Grid grid;
     private JLabel seedUnchange;
@@ -43,12 +45,13 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     private Container old;
     private JTextField seedNum = new JTextField(5);
-    private JLabel seedtext = new JLabel("Enter your puzzle number"); 
-    private JTextField diffLevel = new JTextField(5);
+    private JLabel seedtext = new JLabel("Enter your puzzle number");
+    private ArrayList<String> diffs = new ArrayList<String>();
+    private JComboBox<String> diffLevel;
     private JLabel difftext = new JLabel("Enter your difficulty level");
     private JButton submitted = new JButton("Enter");
     private JButton backtomenupage = new JButton("Back to Menu");
-    private JLabel j = new JLabel("Please enter only integers");
+    private JLabel j = new JLabel();
 
    
     private Container difficulties;
@@ -70,11 +73,12 @@ public class Main extends JFrame implements MouseListener, ActionListener{
     private Grid solutionGrid;
 
     private JButton solveit = new JButton("Solve this Puzzle");
+    private JButton backpuzzle  = new JButton("Go Back to Puzzle");
     
 
     public Main() {
 	this (new Sudoku(2));
-    }
+	    }
     
     public Main(Sudoku s){
 
@@ -107,6 +111,16 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
        
     public void setDifficulties() {
+	diffs.add("Super Easy");
+	diffs.add("Easy");
+	diffs.add("Medium");
+	diffs.add("Hard");
+	diffs.add("Super Hard");
+
+	String[] diffarray = diffs.toArray(new String[diffs.size()]);
+        diffLevel = new JComboBox<String>(diffarray);
+
+
 	difficulties.setLayout(new BoxLayout(difficulties,BoxLayout.Y_AXIS));
 	zerodiff.setMaximumSize(new Dimension(Integer.MAX_VALUE, zerodiff.getMinimumSize().height));
 	zerodiff.addActionListener(this);
@@ -224,10 +238,19 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	newfromgrid.setActionCommand("new game");
 	sideBar.add(newfromgrid);
 	//board.add(grid, BorderLayout.CENTER);
+
+       	textArea.setLabelFor(sideBar);
+	//textArea.setMaximumSize(new Dimension(4,4));
+	textArea.setText("Double click a box on the grid and then click the number you want to place there" +"\n");
+	board.add(textArea,BorderLayout.NORTH);
+
         		
 	board.add(menuBar, BorderLayout.SOUTH);
 	board.add(sideBar, BorderLayout.LINE_END);
 	board.add(grid, BorderLayout.CENTER);
+
+
+
 
 
 	//Creating the Solution Pane
@@ -254,13 +277,28 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	solutionPane.setLayout(new BorderLayout());
 	solutionPane.add(solutionMenu, BorderLayout.SOUTH);
 	solutionPane.add(solutionGrid, BorderLayout.CENTER);
+	check.setVisible(true);
+	newfromgrid.setVisible(true);
+	reveal.setVisible(true);
+	seedUnchange.setVisible(true);
+	backtopuzzle.setVisible(true);
+	setVisible(true);
 
+	
 	if (usersolve) {
 	    check.setVisible(false);
+	    backtopuzzle.setVisible(false);
 	    newfromgrid.setVisible(false);
 	    reveal.setVisible(false);
+	    seedUnchange.setVisible(false);
 	    solveit.addActionListener(this);
 	    solveit.setActionCommand("user solve");
+	    clear.addActionListener(this);
+	    clear.setActionCommand("clear");
+	    backpuzzle.addActionListener(this);
+	    backpuzzle.setActionCommand("goback");
+	    solutionMenu.add(backpuzzle);
+	    sideBar.add(clear);
 	    menuBar.add(solveit);
 	}
     }
@@ -272,6 +310,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	old = new Container();
 
 	diffLevel.setMaximumSize(new Dimension(Integer.MAX_VALUE, submitted.getMinimumSize().height));
+	diffLevel.addActionListener(this); 
 	seedNum.setMaximumSize(new Dimension(Integer.MAX_VALUE, submitted.getMinimumSize().height));
 
 	old.add(seedtext); 
@@ -289,6 +328,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	backtomenupage.addActionListener(this);
 	backtomenupage.setActionCommand("back");
 	old.add(backtomenupage);
+	old.add(j);
 
 	
     }
@@ -381,10 +421,34 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	int r = 0;
 	int c = 0;
 
+	int diff = 0; 
+	Object selected = diffLevel.getSelectedItem();
+	if (selected.toString().equals("Super Easy")){
+	    diff = 0; 
+	}
+	if (selected.toString().equals("Easy")) {
+	    diff = 1;
+	}
+	if (selected.toString().equals("Medium")) {
+	    diff = 2;
+	}
+	if (selected.toString().equals("Hard")) {
+	    diff = 3;
+	}
+	if (selected.toString().equals("Super Hard")) {
+	    diff = 4;
+	} 
+
 	if (event.equals("new game")){
 	    setContentPane(difficulties);
 	    setVisible(true);
 	    // repaint();
+	}
+	if (event.equals("goback")) {
+	    setBoard(initialBoard,true);
+	    setContentPane(board);
+	    setVisible(true);
+
 	}
 	if (event.equals ("solve own")) {
 	    setBoard(new Sudoku("empty"), true);
@@ -418,43 +482,49 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
 	if (event.equals("check")){
 	     //smthg
-	}	
-	
-	if (event.equals("one")){
-	    initialBoard.setNum(yBox, xBox, 1);
-	    grid.repaint();
 	}
-        if (event.equals("two")){
-	    initialBoard.setNum(yBox, xBox, 2);
+	if (event.equals("clear")) {
+	    initialBoard.clear();
 	    grid.repaint();
+	    setVisible(true);
 	}
-	if (event.equals("three")){
-	    initialBoard.setNum(yBox, xBox, 3);
-	    grid.repaint();
-	}
-	if (event.equals("four")){
-	    initialBoard.setNum(yBox, xBox, 4);
-	    grid.repaint();
-	}
-        if (event.equals("five")){
-	    initialBoard.setNum(yBox, xBox, 5);
-	    grid.repaint();
-	}
-	if (event.equals("six")){
-	    initialBoard.setNum(yBox, xBox, 6);
-	    grid.repaint();
-	}
-	if (event.equals("seven")){
-	    initialBoard.setNum(yBox, xBox, 7);
-	    grid.repaint();
-	}
-	if (event.equals("eight")){
-	    initialBoard.setNum(yBox, xBox, 8);
-	    grid.repaint();
-	}
-	if (event.equals("nine")){
-	    initialBoard.setNum(yBox, xBox, 9);
-	    grid.repaint();
+	if (yBox <9 && xBox < 9) {
+	    if (event.equals("one")){
+		initialBoard.setNum(yBox, xBox, 1);
+		grid.repaint();
+	    }
+	    if (event.equals("two")){
+		initialBoard.setNum(yBox, xBox, 2);
+		grid.repaint();
+	    }
+	    if (event.equals("three")){
+		initialBoard.setNum(yBox, xBox, 3);
+		grid.repaint();
+	    }
+	    if (event.equals("four")){
+		initialBoard.setNum(yBox, xBox, 4);
+		grid.repaint();
+	    }
+	    if (event.equals("five")){
+		initialBoard.setNum(yBox, xBox, 5);
+		grid.repaint();
+	    }
+	    if (event.equals("six")){
+		initialBoard.setNum(yBox, xBox, 6);
+		grid.repaint();
+	    }
+	    if (event.equals("seven")){
+		initialBoard.setNum(yBox, xBox, 7);
+		grid.repaint();
+	    }
+	    if (event.equals("eight")){
+		initialBoard.setNum(yBox, xBox, 8);
+		grid.repaint();
+	    }
+	    if (event.equals("nine")){
+		initialBoard.setNum(yBox, xBox, 9);
+		grid.repaint();
+	    }
 	}
 	if (event.equals("supereasy")){
 	    setBoard(new Sudoku(0), false);
@@ -495,55 +565,38 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	if (event.equals("goToOldGame")) {
 	    try {
 		long seed = Integer.parseInt( seedNum.getText());
-		int diff = Integer.parseInt(diffLevel.getText());
+		//int diff = Integer.parseInt(diffLevel.getText());
 	    } catch (NumberFormatException error) {
-		old.add(j);
+		j.setText("Please enter only integers");
+		setVisible(true);
 		return;
 	    }
 	    	long seed = Integer.parseInt( seedNum.getText());
-		int diff = Integer.parseInt(diffLevel.getText());
+		//int diff = Integer.parseInt(diffLevel.getText());
 	    Sudoku s = new Sudoku (diff, seed);
 	    setBoard(s, false);
+	    
 	    setContentPane(board);
 	    setVisible(true);
 	}
 	if (event.equals("user solve")) {
-	    System.out.println("in event");
-	    int[][] grid  = initialBoard.getBoard();
-	    boolean isUnique = true;
-	    for (int row = 0; row < grid.length; row ++) {
-		for (int col = 0; col < grid[row].length; col ++)  {
-		    if (!Sudoku.isUnique(initialBoard,row,col)) {
-			System.out.println(isUnique);
-			isUnique = false;	
-		    }
-		    if (isUnique == false) {
-			//	System.out.println ("its false");
-			break;
-		    }
-		}
-		if (isUnique == false) {
-		    System.out.println ("its false");
-		    break;
-		}
-	    }
-	    System.out.println(isUnique); 
-	    if (Sudoku.isSolvable(initialBoard)) {
-		System.out.println("solvable");
-		if (isUnique) {
-		    System.out.println ("unique");
+	    //System.out.println("in event");
+	    int[][] grid  = initialBoard.getBoard();	    
+	    boolean isSolvable = Sudoku.isSolvable(new Sudoku(initialBoard.getBoard()));
+	    System.out.println(isSolvable);
+	    if (isSolvable) {
+		//System.out.println("solvable");
+		    //System.out.println ("unique");
+		    //System.out.println(initialBoard);
+		    setBoard(initialBoard, true);
 		    setContentPane(solutionPane);
 		    setVisible(true);
-		} else {
-		    System.out.println("not unique");
-		    JLabel notunique = new JLabel("There is more than one possible solution. Please add more numbers") ;
-		    menuBar.add(notunique);
 		}
-	    }
 	    else {
-		System.out.println ("not solvable"); 
-		JLabel notsolvable = new JLabel("This board is not solvable.");
-		menuBar.add(notsolvable);
+		//System.out.println ("not solvable"); 
+		textArea.setText("This board is not solvable");
+		textArea.setVisible(true);
+		//this.add(notsolvable);
 	    }
 		    
 	}

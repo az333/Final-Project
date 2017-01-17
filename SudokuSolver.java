@@ -9,6 +9,16 @@ public class SudokuSolver  {
     public static boolean solveSudoku (Sudoku s) {
 	int[][] board = s.getBoard();
 	//System.out.println(s);
+	for (int r = 0; r < board.length; r ++) {
+	    for (int c = 0; c < board[r].length; c++) {
+		if(!SudokuSolver.rowRepetitions(s,r)||
+		   !SudokuSolver.colRepetitions(s,c)||
+		   !SudokuSolver.squareRepetitions(s,r,c)) {
+		    return false;
+		  
+		}
+	    }
+	}
 	for (int row = 0; row < board.length; row ++) {
 	    for (int col = 0; col < board[row].length; col ++) {
 		//skip the number if its empty 
@@ -35,6 +45,58 @@ public class SudokuSolver  {
 	}
 	return true;
     }
+
+    public static boolean rowRepetitions (Sudoku s, int r) {
+	ArrayList <Integer> rownums = new ArrayList<Integer>();
+	int [][] board = s.getBoard();
+	for (int c = 0; c < board[r].length; c ++) {
+	    if (board[r][c] != 10) {
+		if (rownums.contains(board[r][c])) {
+		    return false;
+		} else { 
+		    rownums.add(board[r][c]);
+		}
+	    }
+	}
+	return true;
+    }
+
+    public static boolean colRepetitions (Sudoku s, int c) {
+	ArrayList <Integer> colnums = new ArrayList<Integer>();
+	int [][] board = s.getBoard();
+	for (int r = 0; r < board.length; r ++) {
+	    if (board[r][c] != 10) {
+		if (colnums.contains(board[r][c])) {
+		    return false;
+		} else { 
+		    colnums.add(board[r][c]);
+		} 
+	    }
+	    
+	}
+	return true;
+    }
+
+    public static boolean squareRepetitions (Sudoku s, int r, int c) {
+	int square = Sudoku.findSquare (r, c);  
+	ArrayList <Integer> squarenums = new ArrayList<Integer>();
+	int [][] board = s.getBoard();
+	int firstrow = (r < 3) ? 0 : ( (r > 5) ? 6: 3); 
+	int firstcol = (c < 3) ? 0 : ( (c > 5) ? 6: 3);
+	for (int row = firstrow; row < firstrow + 3; row ++) {
+	    for (int col = firstcol; col < firstcol +3; col ++) {
+		if (board[row][col] != 10) {
+		    if (squarenums.contains(board[row][col])) {
+			return false;
+		    } else {
+			squarenums.add(board[row][col]); 
+		    }
+		}
+	    }
+	}
+	return true; 
+    }
+
 
 
     public static boolean isLegit (Sudoku s, int r, int c, int  num) {
