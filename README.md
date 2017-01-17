@@ -22,7 +22,6 @@ Our project is a Sudoku Player. It allows the user to play games, play games the
 -List of unresolved bugs: 
 
 •	There's a slight issue with the solver because it will return a solution regardless of whether or not the inputted puzzle is unique. It's not really a bug since it will still provide a solution, but it's not perfect either. 
-•	The checker generally works as well, but sometimes it will say that certain boxes that are correct are actually wrong. 
 
 
 -Directions on how to compile and run your code: 
