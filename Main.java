@@ -9,7 +9,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     private JButton newGame = new JButton("Play a New Game");
     private JButton oldGame = new JButton("Play an Old Game");
-    private JButton settings = new JButton("Settings");
+    //private JButton settings = new JButton("Settings");
     
 
     private Container board;
@@ -90,7 +90,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	setBoard(s);
 	setMenu();
 	setDifficulties();
-	setSettings();
+	//setSettings();
 
 
 	addMouseListener(this);
@@ -150,10 +150,11 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	oldGame.setActionCommand("old game");
 	menu.add(oldGame);
 	
-	settings.setMaximumSize(new Dimension (Integer.MAX_VALUE, settings.getMinimumSize().height));
+	/*	settings.setMaximumSize(new Dimension (Integer.MAX_VALUE, settings.getMinimumSize().height));
 	settings.addActionListener(this);
 	settings.setActionCommand("settings");
 	menu.add(settings);
+	*/
     }
     
     public void setBoard (Sudoku s) {
@@ -279,7 +280,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 
     }
 
-
+    /*
     public void setSettings(){
 
 	settingsPane.setLayout(new BoxLayout(settingsPane, BoxLayout.Y_AXIS));
@@ -293,6 +294,35 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	settingsPane.add(newpuzzle);
 
     }
+
+      
+    public void setFontColor(Graphics g){
+	System.out.println(initialBoard.getColor());
+	if (initialBoard.getColor() == "Orange"){
+	     g.setColor(Color.ORANGE);
+        }
+        if (initialBoard.getColor() == "Pink"){
+	    g.setColor(Color.PINK);
+        }
+        if (initialBoard.getColor() == "Green"){
+	    g.setColor(Color.GREEN);
+        }
+        if (initialBoard.getColor() == "Blue"){
+	    g.setColor(Color.BLUE);
+        }
+	if (initialBoard.getColor() == "Magenta"){
+	    g.setColor(Color.MAGENTA);
+        }
+        if(initialBoard.getColor() == "Dark Gray"){
+	    g.setColor(Color.DARK_GRAY);
+        }
+        if (initialBoard.getColor() == "Black"){
+	    g.setColor(Color.BLACK);
+	}
+
+    }
+    */
+
 
     
     //Empty method definition. 
@@ -411,7 +441,6 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	if (event.equals("check")){
 	    initialBoard.setCheck(true);
 	    grid.repaint();
-	    System.out.println(initialBoard.getCheck());
 	}
 
 	
@@ -420,7 +449,7 @@ public class Main extends JFrame implements MouseListener, ActionListener{
 	    initialBoard.setColor(color);
 	    System.out.println(color);
 	    System.out.println(initialBoard.getColor());
-	    System.out.println(initialBoard.getColor() == "Orange");
+	    //System.out.println(initialBoard.getColor() == "Orange");
 	}
 	
 	if (event.equals("one")){

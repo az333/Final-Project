@@ -52,10 +52,7 @@ public class Grid extends JComponent {
         }
     }
 
-    public void setFontColor(Font f){
-	textFont = f;
-
-    }
+    
     
     private void drawCellValues(Graphics g) {
         g.setFont(textFont);
@@ -69,30 +66,7 @@ public class Grid extends JComponent {
 			g.setColor(Color.RED);
 			g.setFont(textFont);
 		    }
-		    /*
-		    if (initialBoard.getColor() == "Orange"){
-			g.setColor(Color.ORANGE);
-		    }
-		    if (initialBoard.getColor() == "Pink"){
-			g.setColor(Color.PINK);
-		    }
-		    if (initialBoard.getColor() == "Green"){
-			g.setColor(Color.GREEN);
-		    }
-		    if (initialBoard.getColor() == "Blue"){
-			g.setColor(Color.BLUE);
-		    }
-		    if (initialBoard.getColor() == "Magenta"){
-			g.setColor(Color.MAGENTA);
-		    }
-		    if(initialBoard.getColor() == "Dark Gray"){
-			g.setColor(Color.DARK_GRAY);
-		    }
-		    if (initialBoard.getColor() == "Black"){
-			g.setColor(Color.BLACK);
-		    }
-		    */
-		    
+		    //this.setFontColor(g);
 		}
 		if (initialBoard.ogNum(i,j) != 10){
 		    g.setFont(textFont);
